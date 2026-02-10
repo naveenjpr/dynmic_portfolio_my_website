@@ -18,27 +18,6 @@ export default function Sidebar() {
         { submenu: "View Courses", path: "/ViewCourses" },
       ],
     },
-    {
-      MenuName: "Users",
-      icon: <FaUsers />,
-      submenuName: [
-        { submenu: "All Users", path: "/users" },
-        { submenu: "Teams", path: "/teams" },
-      ],
-    },
-    {
-      MenuName: "Media",
-      icon: <FaVideo />,
-      submenuName: [
-        { submenu: "Videos", path: "/videos" },
-        { submenu: "Uploads", path: "/uploads" },
-      ],
-    },
-    {
-      MenuName: "Settings",
-      icon: <LiaSlidersHSolid />,
-      submenuName: [],
-    },
   ];
 
   const toggleMenu = (index, hasSubmenu) => {

@@ -43,7 +43,9 @@ exports.view = async (req, res) => {
   const totalRecords = await Portfolio.countDocuments({ deleted_at: null });
 
   try {
-    const projects = await Portfolio.find({ deleted_at: null });
+    const projects = await Portfolio.find({ deleted_at: null }).sort({
+      created_at: -1,
+    });
     res.status(200).json({
       status: true,
       message: "Projects fetched successfully",
