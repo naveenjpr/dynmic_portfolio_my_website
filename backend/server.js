@@ -18,6 +18,7 @@ server.get("/", (request, response) => {
 //   response.send("Page not found.....");
 // });
 require("./src/routes/backend/portfolio.routes")(server);
+require("./src/routes/backend/Resume.routes")(server);
 
 mongoose
   .connect(process.env.MONGODB_URI)
