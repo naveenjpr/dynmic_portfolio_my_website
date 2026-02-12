@@ -111,7 +111,10 @@ exports.detail = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
-    const existing = await Resume.findById(req.params.id);
+    const resumeId = req.params.id;
+
+    // 🔍 Find existing record
+    const existing = await Resume.findById(resumeId);
 
     if (!existing) {
       return res.status(404).json({
@@ -120,30 +123,41 @@ exports.update = async (req, res) => {
       });
     }
 
+    // 📝 Prepare update data
     let data = {
-      status: req.body.status ?? existing.status,
+      status:
+        typeof req.body.status !== "undefined"
+          ? req.body.status
+          : existing.status,
       updated_at: Date.now(),
     };
 
+    // 📂 If new file uploaded
     if (req.file) {
-      // 🔥 delete old file from cloudinary
+      // 🔥 Delete old file from Cloudinary
       if (existing.image_public_id) {
         await cloudinary.uploader.destroy(existing.image_public_id, {
-          resource_type: "auto",
+          resource_type: existing.file_type || "image",
         });
       }
 
-      data.image = req.file.path;
-      data.image_public_id = req.file.filename;
+      // 🆕 Save new file details
+      data.image = req.file.path; // secure_url
+      data.image_public_id = req.file.filename; // public_id
+      data.file_type =
+        req.file.mimetype === "application/pdf" ? "raw" : "image";
     }
 
-    await Resume.updateOne({ _id: req.params.id }, { $set: data });
+    // 💾 Update in DB
+    await Resume.updateOne({ _id: resumeId }, { $set: data });
 
     return res.json({
       status: true,
       message: "Resume updated successfully",
     });
   } catch (error) {
+    console.error("Update error:", error);
+
     return res.status(500).json({
       status: false,
       message: "Something went wrong",
