@@ -11,6 +11,22 @@ export default function Sidebar() {
 
   const MYdropDown = [
     {
+      MenuName: "Portfolio",
+      icon: <FaBook />,
+      submenuName: [
+        { submenu: "Add portfolio", path: "/Addportfolio" },
+        { submenu: "View portfolio", path: "/Viewportfolio" },
+      ],
+    },
+    {
+      MenuName: "Resume ",
+      icon: <FaBook />,
+      submenuName: [
+        { submenu: "Add Resume", path: "/AddResume" },
+        { submenu: "View Resume", path: "/ViewResume" },
+      ],
+    },
+    {
       MenuName: "Courses",
       icon: <FaBook />,
       submenuName: [

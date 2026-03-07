@@ -73,12 +73,12 @@ export default function ViewCourses() {
   return (
     <>
       <Header />
-      <div className="w-[100%]">
-        <div className="flex">
+      <div className="w-full">
+        <div className="flex ">
           <div>
             <Sidebar />
           </div>
-          <div className="bg-[#d8d8ef] w-[100%]  ">
+          <div className="bg-[#d8d8ef]  overflow-hidden">
             <div className="w-[95%] mx-auto">
               {/* Heading + Search */}
               <div className="flex md:flex-row flex-col justify-between items-center mt-[60px] gap-4">
@@ -215,7 +215,7 @@ export default function ViewCourses() {
                             <td className="border border-gray-300 p-3 text-center">
                               <div className="flex gap-2 justify-center">
                                 <Link
-                                  to={`/AddCourses/${project._id}`}
+                                  to={`/Addportfolio/${project._id}`}
                                   className="cursor-pointer"
                                 >
                                   <button className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-4 py-2 rounded-lg text-xs font-medium transition-all transform hover:scale-105 shadow-md cursor-pointer">

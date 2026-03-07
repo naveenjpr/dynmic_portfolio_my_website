@@ -6,7 +6,16 @@ export default function Home() {
   return (
     <>
       <Header />
-      <Sidebar />
+
+      <div className="grid grid-cols-[30%_auto]">
+        <div>
+          <Sidebar />
+
+        </div>
+        <div>
+          hello
+        </div>
+      </div>
     </>
   )
 }
