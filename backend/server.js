@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const adminModel = require("./src/models/AdminModel.Schema");
 require("dotenv").config();
 
 const server = express();
@@ -19,10 +20,19 @@ server.get("/", (request, response) => {
 // });
 require("./src/routes/backend/portfolio.routes")(server);
 require("./src/routes/backend/Resume.routes")(server);
+require("./src/routes/backend/adminAuth.routes")(server);
 
 mongoose
   .connect(process.env.MONGODB_URI)
-  .then(() => {
+  .then(async () => {
+    const checkAdmin = await adminModel.find();
+    if (checkAdmin.length == 0) {
+      let admin = await adminModel({
+        adminName: "admin",
+        adminPassword: "admin123",
+      });
+      await admin.save();
+    }
     server.listen(process.env.PORT, () => {
       console.log(
         `Database Connected and Server running on port ${process.env.PORT}`,
