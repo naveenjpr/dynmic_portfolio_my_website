@@ -4,12 +4,10 @@ const cloudinary = require("../../config/cloudinary");
 // 👉 ADD PORTFOLIO
 exports.create = async (req, res) => {
   try {
-    const uploadResult = await cloudinary.uploader.upload(req.file.path, {
-      folder: "portfolio",
-    });
     const data = new Portfolio({
-      image: uploadResult.secure_url,
-      image_public_id: uploadResult.public_id,
+      image: req.file ? req.file.path : null,
+      image_public_id: req.file ? req.file.filename : null, // 🔥 IMPORTANT
+
       title: req.body.title || null,
       description: req.body.description || null,
       technologies: JSON.parse(req.body.technologies || "[]"),
@@ -133,6 +131,7 @@ exports.update = async (req, res) => {
 
     if (req.file && req.file.path) {
       data.image = req.file.path;
+      data.image_public_id = req.file.filename; // 🔥 add this
     }
 
     const result = await Portfolio.updateOne(
@@ -169,6 +168,15 @@ exports.delete = async (req, res) => {
   try {
     const delId = req.params.id;
 
+    // 🔍 Check valid ID
+    if (!delId) {
+      return res.status(400).json({
+        status: false,
+        message: "Invalid ID",
+      });
+    }
+
+    // 🔍 Find record
     const portfolio = await Portfolio.findById(delId);
 
     if (!portfolio) {
@@ -178,20 +186,26 @@ exports.delete = async (req, res) => {
       });
     }
 
-    // 🔥 Cloudinary image delete
+    // 🔥 DELETE IMAGE FROM CLOUDINARY
     if (portfolio.image_public_id) {
-      await cloudinary.uploader.destroy(portfolio.image_public_id);
+      try {
+        await cloudinary.uploader.destroy(portfolio.image_public_id);
+        console.log("Cloudinary image deleted:", portfolio.image_public_id);
+      } catch (cloudErr) {
+        console.error("Cloudinary delete error:", cloudErr.message);
+      }
     }
 
-    // 🔥 DB record delete
-    await Portfolio.deleteOne({ _id: delId });
+    // 🔥 DELETE FROM DATABASE
+    await Portfolio.findByIdAndDelete(delId);
 
-    return res.json({
+    return res.status(200).json({
       status: true,
       message: "Portfolio & Image deleted permanently",
     });
   } catch (error) {
-    console.error(error);
+    console.error("Delete error:", error);
+
     return res.status(500).json({
       status: false,
       message: "Something went wrong",
