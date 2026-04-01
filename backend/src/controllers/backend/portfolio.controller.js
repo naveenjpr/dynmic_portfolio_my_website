@@ -113,25 +113,37 @@ exports.detail = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
+    const oldData = await Portfolio.findById(req.params.id);
+
+    if (!oldData) {
+      return res.status(404).json({
+        status: false,
+        message: "Record not found",
+      });
+    }
+
     const data = {
+      image: req.file ? req.file.path : oldData.image,
+      image_public_id: req.file ? req.file.filename : oldData.image_public_id,
+
       title: req.body.title || null,
       description: req.body.description || null,
-      technologies: req.body.technologies
-        ? Array.isArray(req.body.technologies)
-          ? req.body.technologies
-          : req.body.technologies.split(",")
-        : [],
+
+      // 🔥 SAME AS CREATE (NO CHANGE)
+      technologies: JSON.parse(req.body.technologies || "[]"),
+
       github: {
         frontend: req.body.githubFrontend || "",
         backend: req.body.githubBackend || "",
       },
+
       link: req.body.link || null,
-      status: req.body.status ?? false,
+      status: req.body.status || false,
     };
 
-    if (req.file && req.file.path) {
-      data.image = req.file.path;
-      data.image_public_id = req.file.filename; // 🔥 add this
+    // 🔥 delete old image if new uploaded
+    if (req.file && oldData.image_public_id) {
+      await cloudinary.uploader.destroy(oldData.image_public_id);
     }
 
     const result = await Portfolio.updateOne(
@@ -145,20 +157,12 @@ exports.update = async (req, res) => {
       data: result,
     });
   } catch (error) {
-    let error_messages = [];
-
-    if (error.errors) {
-      for (let field in error.errors) {
-        error_messages.push(error.errors[field].message);
-      }
-    } else {
-      error_messages.push(error.message);
-    }
+    console.error(error);
 
     return res.status(500).json({
       status: false,
       message: "Something went wrong",
-      error_messages,
+      error: error.message,
     });
   }
 };
