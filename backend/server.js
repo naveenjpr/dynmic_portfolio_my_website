@@ -18,9 +18,10 @@ server.get("/", (request, response) => {
 // server.get("*", (request, response) => {
 //   response.send("Page not found.....");
 // });
-require("./src/routes/backend/portfolio.routes")(server);
-require("./src/routes/backend/Resume.routes")(server);
-require("./src/routes/backend/adminAuth.routes")(server);
+require("./src/routes/admin/portfolio.routes")(server);
+require("./src/routes/admin/Resume.routes")(server);
+require("./src/routes/admin/adminAuth.routes")(server);
+require("./src/routes/admin/category.routes")(server);
 
 mongoose
   .connect(process.env.MONGODB_URI)

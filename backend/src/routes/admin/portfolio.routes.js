@@ -1,6 +1,6 @@
 const express = require("express");
 const route = express.Router();
-const portfolioController = require("../../controllers/backend/portfolio.controller");
+const portfolioController = require("../../controllers/admin/portfolio.controller");
 const upload = require("../../config/upload");
 
 module.exports = (app) => {

@@ -1,6 +1,6 @@
 const express = require("express");
 const route = express.Router();
-const ResumeController = require("../../controllers/backend/Resume.controller");
+const ResumeController = require("../../controllers/admin/Resume.controller");
 const upload = require("../../config/upload");
 
 module.exports = (app) => {
