@@ -18,10 +18,15 @@ server.get("/", (request, response) => {
 // server.get("*", (request, response) => {
 //   response.send("Page not found.....");
 // });
+
+//admin 
 require("./src/routes/admin/portfolio.routes")(server);
 require("./src/routes/admin/Resume.routes")(server);
 require("./src/routes/admin/adminAuth.routes")(server);
 require("./src/routes/admin/category.routes")(server);
+require("./src/routes/admin/Skills.routes")(server);
+//website
+
 
 mongoose
   .connect(process.env.MONGODB_URI)
