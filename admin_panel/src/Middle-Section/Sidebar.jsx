@@ -1,96 +1,106 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
-import { FaBook } from "react-icons/fa";
-import { LiaSlidersHSolid } from "react-icons/lia";
-import { GiTeamDowngrade } from "react-icons/gi";
-import { FaUsers, FaVideo } from "react-icons/fa6";
+import { FaBook, FaUserGraduate, FaLayerGroup, FaCode } from "react-icons/fa";
+import { MdWork } from "react-icons/md";
 
 export default function Sidebar() {
   const [openIndex, setOpenIndex] = useState(null);
 
   const MYdropDown = [
     {
-      MenuName: "Portfolio",
-      icon: <FaBook />,
+      MenuName: "My Projects",
+      icon: <MdWork />,
       submenuName: [
-        { submenu: "Add portfolio", path: "/Addportfolio" },
-        { submenu: "View portfolio", path: "/Viewportfolio" },
+        { submenu: "Add Portfolio", path: "/Addportfolio" },
+        { submenu: "View Portfolio", path: "/Viewportfolio" },
       ],
     },
     {
-      MenuName: "Resume ",
-      icon: <FaBook />,
+      MenuName: "Resume",
+      icon: <FaUserGraduate />, // changed
       submenuName: [
         { submenu: "Add Resume", path: "/AddResume" },
         { submenu: "View Resume", path: "/ViewResume" },
       ],
     },
     {
-      MenuName: "Courses",
-      icon: <FaBook />,
+      MenuName: "Catgory",
+      icon: <FaLayerGroup />, // changed
       submenuName: [
-        { submenu: "Add Courses", path: "/AddCourses" },
-        { submenu: "View Courses", path: "/ViewCourses" },
+        { submenu: "Add Category", path: "/Addcategory" },
+        { submenu: "View Category", path: "/Viewcategory" },
+      ],
+    },
+    {
+      MenuName: "skills",
+      icon: <FaCode />, // changed
+      submenuName: [
+        { submenu: "Add skills", path: "/Addskills" },
+        { submenu: "View skills", path: "/Viewskills" },
       ],
     },
   ];
 
-  const toggleMenu = (index, hasSubmenu) => {
-    if (!hasSubmenu) return;
+  const toggleMenu = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
-
   return (
-    <aside className="w-[200px] h-screen border-r bg-white sticky top-0">
-      <div className="px-4 pt-6">
+    <aside className="max-w-[220px] h-screen bg-gradient-to-b from-slate-900 to-slate-800 border-r border-slate-700 sticky top-0 shadow-xl">
+      {/* LOGO / TITLE */}
+      <div className="p-5 border-b border-slate-700">
+        <h2 className="text-xl font-bold text-white tracking-wide">
+          🚀 Admin Panel
+        </h2>
+      </div>
+
+      {/* MENU */}
+      <div className="p-3">
         <ul className="flex flex-col gap-2">
           {MYdropDown.map((item, index) => (
-            <li key={index} className="rounded-md">
+            <li key={index}>
+              {/* MAIN MENU */}
               <div
-                onClick={() => toggleMenu(index, item.submenuName?.length)}
-                className={`flex justify-between items-center px-3 py-2 cursor-pointer rounded-md transition-colors duration-200
-                ${
-                  openIndex === index
-                    ? "bg-indigo-600 text-white"
-                    : "text-gray-700 hover:bg-gray-100"
-                }`}
+                onClick={() => toggleMenu(index)}
+                className={`flex justify-between items-center px-4 py-3 rounded-xl cursor-pointer transition-all duration-300 group
+                ${openIndex === index
+                    ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-md"
+                    : "text-gray-300 hover:bg-slate-700"
+                  }`}
               >
                 <div className="flex items-center gap-3">
-                  <span className="text-lg text-gray-500">{item.icon}</span>
-                  <span className="text-sm font-medium">{item.MenuName}</span>
+                  <span className="text-lg">{item.icon}</span>
+                  <span className="text-sm font-semibold">{item.MenuName}</span>
                 </div>
 
-                {item.submenuName?.length > 0 && (
-                  <IoIosArrowForward
-                    className={`text-gray-400 transition-transform duration-200 ${openIndex === index ? "rotate-90 text-white" : ""}`}
-                  />
-                )}
+                <IoIosArrowForward
+                  className={`transition-transform duration-300 ${openIndex === index ? "rotate-90" : ""
+                    }`}
+                />
               </div>
 
-              {item.submenuName?.length > 0 && (
-                <ul
-                  className={`ml-10 overflow-hidden transition-all duration-300
-                    ${openIndex === index ? "max-h-40 mt-2" : "max-h-0"}`}
-                >
-                  {item.submenuName.map((sub, i) => (
-                    <li key={i}>
-                      <NavLink
-                        to={sub.path}
-                        className={({ isActive }) =>
-                          `block py-2 text-sm rounded-l-md pl-2 transition-colors duration-150 ${
-                            isActive
-                              ? "text-indigo-600 bg-indigo-50 font-semibold"
-                              : "text-gray-600 hover:text-indigo-600"
-                          }`
-                        }
-                      >
-                        {sub.submenu}
-                      </NavLink>
-                    </li>
-                  ))}
-                </ul>
-              )}
+              {/* SUBMENU */}
+              <ul
+                className={`ml-6 mt-1 overflow-hidden transition-all duration-300 ${openIndex === index ? "max-h-40" : "max-h-0"
+                  }`}
+              >
+                {item.submenuName.map((sub, i) => (
+                  <li key={i}>
+                    <NavLink
+                      to={sub.path}
+                      className={({ isActive }) =>
+                        `block px-3 py-2 text-sm rounded-lg transition-all duration-200
+                        ${isActive
+                          ? "bg-indigo-500/20 text-indigo-400 font-semibold border-l-4 border-indigo-500"
+                          : "text-gray-400 hover:text-white hover:bg-slate-700"
+                        }`
+                      }
+                    >
+                      {sub.submenu}
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
             </li>
           ))}
         </ul>

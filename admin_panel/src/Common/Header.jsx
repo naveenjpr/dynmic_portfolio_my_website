@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { IoReorderThreeOutline } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Disclosure,
   DisclosureButton,
@@ -11,8 +11,22 @@ import {
   MenuItems,
 } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { logOut } from "../Redux/AdminSlice";
 export default function Header() {
-  // const navLinks = [{ name: "Home", to: "/admin" }];
+  let loginData = useSelector((myAllState) => {
+    return myAllState.loginStore.adminDetails;
+  });
+
+  const dispatch = useDispatch();
+
+  let navigate = useNavigate();
+  useEffect(() => {
+    if (loginData == null) {
+      navigate("/Login");
+    }
+  }, [loginData]);
 
   const navigation = [
     { name: "Dashboard", href: "/admin", current: true },
@@ -23,6 +37,11 @@ export default function Header() {
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
+
+  const handleLogout = () => {
+    dispatch(logOut()); // redux + cookie clear
+    navigate("/Login"); // redirect
+  };
   return (
     <header className="w-full sticky top-0 z-50 ">
       <Disclosure as="nav" className="relative bg-gray-800 ">
@@ -99,7 +118,7 @@ export default function Header() {
                 >
                   <MenuItem>
                     <Link
-                      href="#"
+                      to="#"
                       className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
                     >
                       Your profile
@@ -107,19 +126,19 @@ export default function Header() {
                   </MenuItem>
                   <MenuItem>
                     <Link
-                      href="#"
+                      to="#"
                       className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
                     >
                       Settings
                     </Link>
                   </MenuItem>
                   <MenuItem>
-                    <Link
-                      href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
+                    <button
+                      onClick={handleLogout}
+                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
                       Sign out
-                    </Link>
+                    </button>
                   </MenuItem>
                 </MenuItems>
               </Menu>

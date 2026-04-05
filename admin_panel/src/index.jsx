@@ -13,6 +13,14 @@ import AddCourses from "./DropDown/portfolio/AddCourses";
 import Sidebar from "./Middle-Section/Sidebar";
 import AddResume from "./DropDown/Resume/AddResume";
 import ViewResume from "./DropDown/Resume/ViewResume";
+import Login from "./Pages/Login";
+import { store } from "./Redux/store";
+import { Provider } from "react-redux";
+import Addcategory from "./DropDown/Category/Addcategory";
+import Viewcategory from "./DropDown/Category/Viewcategory";
+import { ToastContainer, toast } from "react-toastify";
+import Addskills from "./DropDown/Skills/Addskills";
+import Viewskills from "./DropDown/Skills/Viewskills";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +40,14 @@ const router = createBrowserRouter([
     element: <ViewResume />,
   },
   {
+    path: "/Addcategory/:id?",
+    element: <Addcategory />,
+  },
+  {
+    path: "/Viewcategory",
+    element: <Viewcategory />,
+  },
+  {
     path: "/Addportfolio/:id?",
     element: <AddCourses />,
   },
@@ -40,13 +56,26 @@ const router = createBrowserRouter([
     element: <ViewCourses />,
   },
   {
+    path: "/Addskills/:id?",
+    element: <Addskills />,
+  },
+  {
+    path: "/Viewskills",
+    element: <Viewskills />,
+  },
+  {
     path: "/Sidebar",
     element: <Sidebar />,
+  },
+  {
+    path: "/Login",
+    element: <Login />,
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+  <Provider store={store}>
+    <ToastContainer />
     <RouterProvider router={router} />
-  </React.StrictMode>,
+  </Provider>,
 );

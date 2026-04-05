@@ -26,6 +26,7 @@ require("./src/routes/admin/adminAuth.routes")(server);
 require("./src/routes/admin/category.routes")(server);
 require("./src/routes/admin/Skills.routes")(server);
 //website
+require("./src/routes/website/Skills.routes")(server);
 
 
 mongoose

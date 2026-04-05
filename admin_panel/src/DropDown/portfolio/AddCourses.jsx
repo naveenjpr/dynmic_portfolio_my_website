@@ -13,6 +13,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function AddCourses() {
+  let baseurl = import.meta.env.VITE_API_URL;
   let params = useParams();
   let paramsid = params.id;
   console.log(paramsid);
@@ -46,7 +47,11 @@ export default function AddCourses() {
     }
   };
 
-  const handleAddTech = () => {
+  // Fixed handleAddTech function to prevent default behavior
+  const handleAddTech = (e) => {
+    if (e) {
+      e.preventDefault(); // Prevent form submission
+    }
     if (currentTech.trim() && !technologies.includes(currentTech.trim())) {
       setTechnologies([...technologies, currentTech.trim()]);
       setCurrentTech("");
@@ -74,74 +79,47 @@ export default function AddCourses() {
   let addData = (e) => {
     e.preventDefault();
 
-    const form = new FormData(e.target);
-    form.set("technologies", JSON.stringify(technologies));
+    const form = new FormData();
+
+    // 🔥 manually append all fields
+    form.append("title", formData.title);
+    form.append("description", formData.description);
+    form.append("githubFrontend", formData.githubFrontend);
+    form.append("githubBackend", formData.githubBackend);
+    form.append("link", formData.link);
+    form.append("status", formData.status);
+
+    // 🔥 MOST IMPORTANT
+    form.append("technologies", JSON.stringify(technologies));
+
+    // 🔥 image
+    const fileInput = e.target.image;
+    if (fileInput && fileInput.files[0]) {
+      form.append("image", fileInput.files[0]);
+    }
 
     if (paramsid) {
       axios
         .put(
-          `https://dynmic-portfolio-my-website.onrender.com/api/backend/portfolio/update/${paramsid}`,
+          `${baseurl}/api/backend/portfolio/update/${paramsid}`,
           form,
         )
         .then((result) => {
           if (result.data.status) {
-            setFormData({
-              title: result.data.data.title,
-              description: result.data.data.description,
-              githubFrontend: result.data.data.githubFrontend,
-              githubBackend: result.data.data.githubBackend,
-              link: result.data.data.link,
-              status: result.data.data.status,
-            });
-
-            if (typeof toast !== "undefined") {
-              toast.success("Product updated successfully!");
-            } else {
-              alert("Product updated successfully!");
-            }
-
-            setTimeout(() => {
-              navigate("/ViewCourses");
-            }, 500);
-          } else {
-            if (typeof toast !== "undefined") {
-              toast.error(result.data.message || "Failed to update product");
-            } else {
-              alert(result.data.message || "Failed to update product");
-            }
-          }
-        })
-        .catch((error) => {
-          if (typeof toast !== "undefined") {
-            toast.error("Something went wrong while updating product");
-          } else {
-            alert("Something went wrong while updating product");
+            alert("Updated successfully");
+            navigate("/Viewportfolio");
           }
         });
     } else {
       axios
         .post(
-          "https://dynmic-portfolio-my-website.onrender.com/api/backend/portfolio/add",
+          `${baseurl}/api/backend/portfolio/add`,
           form,
         )
         .then((result) => {
           if (result.data.status) {
-            setFormSubmit(true);
-            if (typeof toast !== "undefined") {
-              toast.success("Project added successfully!");
-            } else {
-              alert("Project added successfully!");
-            }
-            setTimeout(() => {
-              navigate("/Viewportfolio");
-            }, 500);
-          }
-        })
-        .catch(() => {
-          if (typeof toast !== "undefined") {
-            toast.error("Something went wrong");
-          } else {
-            alert("Something went wrong");
+            alert("Added successfully");
+            navigate("/Viewportfolio");
           }
         });
     }
@@ -151,8 +129,8 @@ export default function AddCourses() {
     if (paramsid) {
       axios
         .post(
-          "https://dynmic-portfolio-my-website.onrender.com/api/backend/portfolio/detail/" +
-            paramsid,
+          `${baseurl}/api/backend/portfolio/detail/` +
+          paramsid,
         )
         .then((result) => {
           if (result.data.status) {
@@ -171,7 +149,7 @@ export default function AddCourses() {
             setImagePreview(d.image || null);
           }
         })
-        .catch(() => {});
+        .catch(() => { });
     }
   }, [paramsid]);
 
@@ -293,7 +271,7 @@ export default function AddCourses() {
                     />
                   </div>
 
-                  {/* Technologies Selection */}
+                  {/* Technologies Selection - FIXED SECTION */}
                   <div className="space-y-4">
                     <label className="text-sm font-semibold text-slate-300 tracking-wider uppercase">
                       Core Technologies
@@ -303,16 +281,18 @@ export default function AddCourses() {
                         type="text"
                         value={currentTech}
                         onChange={(e) => setCurrentTech(e.target.value)}
-                        onKeyPress={(e) =>
-                          e.key === "Enter" &&
-                          (e.preventDefault(), handleAddTech())
-                        }
+                        onKeyPress={(e) => {
+                          if (e.key === "Enter") {
+                            e.preventDefault(); // Prevent form submission
+                            handleAddTech(e);
+                          }
+                        }}
                         className="flex-1 px-5 py-4 bg-slate-950 border border-slate-700 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all placeholder:text-slate-600"
                         placeholder="Add technology (e.g., Next.js, FastAPI)"
                       />
                       <button
                         type="button"
-                        onClick={handleAddTech}
+                        onClick={(e) => handleAddTech(e)}
                         className="px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl transition-all shadow-lg shadow-indigo-500/20 active:scale-95 flex items-center gap-2"
                       >
                         <FaPlusCircle /> Add

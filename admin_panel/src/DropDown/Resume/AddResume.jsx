@@ -6,6 +6,8 @@ import { useNavigate, useParams } from "react-router";
 import axios from "axios";
 
 export default function AddResume() {
+    let baseurl = import.meta.env.VITE_API_URL;
+
     const [imagePreview, setImagePreview] = useState(null);
     const [formsubmit, setFormSubmit] = useState(false);
     const [formData, setFormData] = useState({
@@ -51,7 +53,7 @@ export default function AddResume() {
     let paramId = params.id;
     useEffect(() => {
         if (paramId) {
-            axios.post(`https://dynmic-portfolio-my-website.onrender.com/api/backend/Resume/detail/${paramId}`)
+            axios.post(`${baseurl}/api/backend/Resume/detail/${paramId}`)
                 .then((result) => {
                     const data = result.data.data;
 
@@ -76,7 +78,7 @@ export default function AddResume() {
         if (paramId) {
             axios
                 .put(
-                    `https://dynmic-portfolio-my-website.onrender.com/api/backend/Resume/update/${paramId}`,
+                    `${baseurl}/api/backend/Resume/update/${paramId}`,
                     form
                 )
                 .then((result) => {
@@ -96,7 +98,7 @@ export default function AddResume() {
         else {
             axios
                 .post(
-                    "https://dynmic-portfolio-my-website.onrender.com/api/backend/Resume/add",
+                    `${baseurl}/api/backend/Resume/add`,
                     form,
                 )
                 .then((result) => {
