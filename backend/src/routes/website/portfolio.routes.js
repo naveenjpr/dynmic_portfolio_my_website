@@ -9,5 +9,5 @@ module.exports = (app) => {
 
   app.use("/api/website/portfolio", route);
 };
-//http://localhost:5000/api/backend/portfolio/view
+//http://localhost:5000/api/website/portfolio/view
 
