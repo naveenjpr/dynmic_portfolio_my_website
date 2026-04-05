@@ -21,6 +21,8 @@ import Viewcategory from "./DropDown/Category/Viewcategory";
 import { ToastContainer, toast } from "react-toastify";
 import Addskills from "./DropDown/Skills/Addskills";
 import Viewskills from "./DropDown/Skills/Viewskills";
+import AddAchievements from "./DropDown/Achievements/AddAchievements";
+import ViewAchievements from "./DropDown/Achievements/ViewAchievements";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +48,14 @@ const router = createBrowserRouter([
   {
     path: "/Viewcategory",
     element: <Viewcategory />,
+  },
+  {
+    path: "/AddAchievements/:id?",
+    element: <AddAchievements />,
+  },
+  {
+    path: "/ViewAchievements",
+    element: <ViewAchievements />,
   },
   {
     path: "/Addportfolio/:id?",

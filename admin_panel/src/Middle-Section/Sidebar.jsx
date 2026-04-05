@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
-import { FaBook, FaUserGraduate, FaLayerGroup, FaCode } from "react-icons/fa";
+import { FaBook, FaUserGraduate, FaLayerGroup, FaCode, FaAward } from "react-icons/fa";
 import { MdWork } from "react-icons/md";
 
 export default function Sidebar() {
@@ -38,6 +38,14 @@ export default function Sidebar() {
       submenuName: [
         { submenu: "Add skills", path: "/Addskills" },
         { submenu: "View skills", path: "/Viewskills" },
+      ],
+    },
+    {
+      MenuName: "Achievements",
+      icon: <FaAward />, // changed
+      submenuName: [
+        { submenu: "Add Achievements", path: "/AddAchievements" },
+        { submenu: "View Achievements", path: "/ViewAchievements" },
       ],
     },
   ];
