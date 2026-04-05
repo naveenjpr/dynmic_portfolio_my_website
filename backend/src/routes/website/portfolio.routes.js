@@ -5,8 +5,6 @@ const portfolioController = require("../../controllers/website/portfolio.control
 
 module.exports = (app) => {
   route.post("/view", portfolioController.view);
-
-
   app.use("/api/website/portfolio", route);
 };
 //http://localhost:5000/api/website/portfolio/view

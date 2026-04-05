@@ -2,7 +2,6 @@ const Portfolio = require("../../models/portfolio.Schema");
 
 
 
-// 👉 VIEW ALL PORTFOLIO
 exports.view = async (req, res) => {
 
   try {
@@ -12,7 +11,6 @@ exports.view = async (req, res) => {
     res.status(200).json({
       status: true,
       message: "Projects fetched successfully",
-      totalRecords,
       data: projects,
     });
   } catch (err) {
