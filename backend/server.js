@@ -28,6 +28,8 @@ require("./src/routes/admin/Skills.routes")(server);
 require("./src/routes/admin/Achievements.routes")(server);
 //website
 require("./src/routes/website/Skills.routes")(server);
+require("./src/routes/website/Achievements.routes")(server);
+require("./src/routes/website/portfolio.routes")(server);
 
 
 mongoose
