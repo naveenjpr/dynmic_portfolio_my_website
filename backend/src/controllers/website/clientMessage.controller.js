@@ -17,7 +17,8 @@ exports.create = async (req, res) => {
 
         // 2. Send Email to Admin (Site Owner)
         const mailOptions = {
-            from: `"${yourName}" <${yourEmail}>`,
+            from: `"${yourName}" <${process.env.EMAIL_USER}>`, // ✅ From must be your email for Gmail
+            replyTo: yourEmail,                                // ✅ User's email to reply back
             to: process.env.EMAIL_USER,
             subject: `New Message from Portfolio: ${yourName}`,
             html: `
@@ -37,8 +38,15 @@ exports.create = async (req, res) => {
             `,
         };
 
-        const info = await transporter.sendMail(mailOptions);
-        console.log("Email Notification Sent:", info.messageId);
+        // Attempt to send email
+        try {
+            const info = await transporter.sendMail(mailOptions);
+            console.log("Email Notification Sent:", info.messageId);
+        } catch (emailErr) {
+            console.error("Email Sending Failed:", emailErr);
+            // We still consider the request successful because it's saved in the DB
+        }
+
 
         res.status(200).json({
             status: true,
