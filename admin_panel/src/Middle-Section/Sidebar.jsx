@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
-import { FaBook, FaUserGraduate, FaLayerGroup, FaCode, FaAward } from "react-icons/fa";
+import { FaBook, FaUserGraduate, FaLayerGroup, FaCode, FaAward, FaEnvelope } from "react-icons/fa";
 import { MdWork } from "react-icons/md";
 
 export default function Sidebar() {
@@ -46,6 +46,13 @@ export default function Sidebar() {
       submenuName: [
         { submenu: "Add Achievements", path: "/AddAchievements" },
         { submenu: "View Achievements", path: "/ViewAchievements" },
+      ],
+    },
+    {
+      MenuName: "Client Message",
+      icon: <FaEnvelope />, // changed
+      submenuName: [
+        { submenu: "View Client Message", path: "/ViewClientMessage" },
       ],
     },
   ];

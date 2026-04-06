@@ -23,6 +23,7 @@ import Addskills from "./DropDown/Skills/Addskills";
 import Viewskills from "./DropDown/Skills/Viewskills";
 import AddAchievements from "./DropDown/Achievements/AddAchievements";
 import ViewAchievements from "./DropDown/Achievements/ViewAchievements";
+import ViewClientSendMessage from "./DropDown/ClientSendMessage/ViewClientSendMessage";
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,11 @@ const router = createBrowserRouter([
   {
     path: "/ViewAchievements",
     element: <ViewAchievements />,
+  },
+
+  {
+    path: "/ViewClientMessage",
+    element: <ViewClientSendMessage />,
   },
   {
     path: "/Addportfolio/:id?",
