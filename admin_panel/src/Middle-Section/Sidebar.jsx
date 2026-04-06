@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
-import { FaBook, FaUserGraduate, FaLayerGroup, FaCode, FaAward, FaEnvelope } from "react-icons/fa";
+import { FaBook, FaUserGraduate, FaLayerGroup, FaCode, FaAward, FaEnvelope, FaAddressCard } from "react-icons/fa";
 import { MdWork } from "react-icons/md";
 
 export default function Sidebar() {
@@ -53,6 +53,14 @@ export default function Sidebar() {
       icon: <FaEnvelope />, // changed
       submenuName: [
         { submenu: "View Client Message", path: "/ViewClientMessage" },
+      ],
+    },
+    {
+      MenuName: "ConnectMe",
+      icon: <FaAddressCard />, // updated
+      submenuName: [
+        { submenu: "Add ConnectMe", path: "/AddConnectMe" },
+        { submenu: "View ConnectMe", path: "/ViewConnectMe" },
       ],
     },
   ];
