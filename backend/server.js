@@ -28,12 +28,14 @@ require("./src/routes/admin/Skills.routes")(server);
 require("./src/routes/admin/Achievements.routes")(server);
 require("./src/routes/admin/clientMessage.routes")(server);
 require("./src/routes/admin/ConnectMe.routes")(server);
+require("./src/routes/admin/SociallyEngaged.routes")(server);
 //website
 require("./src/routes/website/Skills.routes")(server);
 require("./src/routes/website/Achievements.routes")(server);
 require("./src/routes/website/portfolio.routes")(server);
 require("./src/routes/website/clientMessage.routes")(server);
 require("./src/routes/website/ConnectMe.routes")(server);
+require("./src/routes/website/SociallyEngaged.routes")(server);
 
 
 mongoose

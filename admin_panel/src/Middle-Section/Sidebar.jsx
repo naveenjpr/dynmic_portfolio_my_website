@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
-import { FaBook, FaUserGraduate, FaLayerGroup, FaCode, FaAward, FaEnvelope, FaAddressCard } from "react-icons/fa";
+import { FaBook, FaUserGraduate, FaLayerGroup, FaCode, FaAward, FaEnvelope, FaAddressCard, FaShareAlt } from "react-icons/fa";
 import { MdWork } from "react-icons/md";
 
 export default function Sidebar() {
@@ -61,6 +61,14 @@ export default function Sidebar() {
       submenuName: [
         { submenu: "Add ConnectMe", path: "/AddConnectMe" },
         { submenu: "View ConnectMe", path: "/ViewConnectMe" },
+      ],
+    },
+    {
+      MenuName: "Socially Engaged",
+      icon: <FaShareAlt />, // updated
+      submenuName: [
+        { submenu: "Add Social", path: "/AddSocial" },
+        { submenu: "View Social", path: "/ViewSocial" },
       ],
     },
   ];

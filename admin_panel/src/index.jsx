@@ -26,6 +26,8 @@ import ViewAchievements from "./DropDown/Achievements/ViewAchievements";
 import ViewClientSendMessage from "./DropDown/ClientSendMessage/ViewClientSendMessage";
 import ViewConnectMe from "./DropDown/ConnectMe/ViewConnectMe";
 import AddConnectMe from "./DropDown/ConnectMe/AddConnectMe";
+import ViewSocial from "./DropDown/Social/ViewSocial";
+import AddSocial from "./DropDown/Social/AddSocial";
 
 const router = createBrowserRouter([
   {
@@ -88,6 +90,14 @@ const router = createBrowserRouter([
   {
     path: "/Viewskills",
     element: <Viewskills />,
+  },
+  {
+    path: "/AddSocial/:id?",
+    element: <AddSocial />,
+  },
+  {
+    path: "/ViewSocial",
+    element: <ViewSocial />,
   },
   {
     path: "/Sidebar",

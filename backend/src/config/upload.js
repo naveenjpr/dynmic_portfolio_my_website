@@ -7,7 +7,7 @@ const storage = new CloudinaryStorage({
   params: {
     folder: "portfolio",
     resource_type: "auto", // 🔥 important for pdf
-    allowed_formats: ["jpg", "png", "jpeg", "webp", "pdf"],
+    allowed_formats: ["jpg", "png", "jpeg", "webp", "pdf", "svg"],
   },
 });
 
