@@ -28,6 +28,8 @@ import ViewConnectMe from "./DropDown/ConnectMe/ViewConnectMe";
 import AddConnectMe from "./DropDown/ConnectMe/AddConnectMe";
 import ViewSocial from "./DropDown/Social/ViewSocial";
 import AddSocial from "./DropDown/Social/AddSocial";
+import ViewExperience from "./DropDown/Experience/ViewExperience";
+import AddExperience from "./DropDown/Experience/AddExperience";
 
 const router = createBrowserRouter([
   {
@@ -82,6 +84,14 @@ const router = createBrowserRouter([
   {
     path: "/Viewportfolio",
     element: <ViewCourses />,
+  },
+  {
+    path: "/AddExperience/:id?",
+    element: <AddExperience />,
+  },
+  {
+    path: "/ViewExperience",
+    element: <ViewExperience />,
   },
   {
     path: "/Addskills/:id?",

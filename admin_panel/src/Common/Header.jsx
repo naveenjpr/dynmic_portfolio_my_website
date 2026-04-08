@@ -30,9 +30,9 @@ export default function Header() {
 
   const navigation = [
     { name: "Dashboard", href: "/admin", current: true },
-    { name: "Team", href: "/admin", current: false },
-    { name: "Projects", href: "/admin", current: false },
-    { name: "Calendar", href: "/admin", current: false },
+    // { name: "Team", href: "/admin", current: false },
+    // { name: "Projects", href: "/admin", current: false },
+    // { name: "Calendar", href: "/admin", current: false },
   ];
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
