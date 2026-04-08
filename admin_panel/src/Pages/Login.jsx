@@ -23,7 +23,7 @@ export default function Login() {
     };
 
     axios
-      .post(`${baseUrl}api/backend/adminAuth/login`, obj)
+      .post(`${baseUrl}/api/backend/adminAuth/login`, obj)
       .then((res) => {
         if (res.data.success) {
           dispatch(saveLoginDetails({ admin: res.data.admin }));
