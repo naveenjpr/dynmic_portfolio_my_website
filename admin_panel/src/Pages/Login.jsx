@@ -6,9 +6,8 @@ import { saveLoginDetails } from "../Redux/AdminSlice";
 import { useDispatch, useSelector } from "react-redux";
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
-
-  const navigate = useNavigate();
   let baseurl = import.meta.env.VITE_API_URL;
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   let loginData = useSelector((myAllState) => {
     return myAllState.loginStore.adminDetails;
@@ -23,7 +22,7 @@ export default function Login() {
     };
 
     axios
-      .post(`${baseUrl}/api/backend/adminAuth/login`, obj)
+      .post(`${baseurl}/api/backend/adminAuth/login`, obj)
       .then((res) => {
         if (res.data.success) {
           dispatch(saveLoginDetails({ admin: res.data.admin }));
@@ -69,7 +68,7 @@ export default function Login() {
           {/* Password */}
           <div className="relative">
             <label className="block mb-2 text-sm font-medium text-gray-600">
-              adminPassword{" "}
+              admin Password
             </label>
             <input
               type={showPassword ? "text" : "password"}
@@ -90,7 +89,7 @@ export default function Login() {
           {/* Button */}
           <button
             type="submit"
-            className="w-full p-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold transition shadow-md"
+            className="cursor-pointer w-full p-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold transition shadow-md"
           >
             Login
           </button>
