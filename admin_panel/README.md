@@ -1,16 +1,62 @@
-# React + Vite
+# Portfolio Admin Panel - Folder Structure Explanation
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This document explains the organization and purpose of the directories and files within the `admin_panel` directory.
 
-Currently, two official plugins are available:
+## Directory Structure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### `src/`
+The core of the application, containing all React components, logic, and assets.
 
-## React Compiler
+*   **`Common/`**: Contains components that are shared across multiple pages.
+    *   `Header.jsx`: The top navigation bar.
+*   **`DropDown/`**: Organized by feature module. These directories contain the specific forms and tables for managing portfolio data.
+    *   `Experience/`: `AddExperience.jsx` (form) and `ViewExperience.jsx` (data table).
+    *   `Portfolio/`: Components for managing your projects.
+    *   `Skills/`: Components for managing your professional skills.
+    *   `Achievements/`: Components for manageing your certificates and awards.
+    *   (and more...)
+*   **`Middle-Section/`**: Contains layout-specific components that sit between the header and the main content.
+    *   `Sidebar.jsx`: The main vertical navigation menu.
+*   **`Pages/`**: The top-level components for each route in the application.
+    *   `Home.jsx`: The main dashboard page.
+    *   `Login.jsx`: The authentication page.
+*   **`Redux/`**: State management using Redux Toolkit.
+    *   `AdminSlice.js`: Manages authentication state and UI states like sidebar visibility.
+    *   `store.js`: The central Redux store configuration.
+*   **`App.jsx`**: The main application component where routes are defined.
+*   **`index.jsx`**: The entry point for the React application that mounts the app to the DOM.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Root Files
+*   **`.env`**: Stores environment variables such as `VITE_API_URL` for backend communication.
+*   **`vite.config.js`**: Configuration file for the Vite build tool.
+*   **`tailwind.config.js`**: Configuration for Tailwind CSS styling.
+*   **`package.json`**: Lists project dependencies and scripts (e.g., `npm run dev`).
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+To get the project running on your local machine, follow these steps:
+
+### 1. Start the Backend Server
+Navigate to the `backend` directory and run:
+```bash
+# Install dependencies
+npm install
+
+# Start the server with Nodemon
+npm start
+```
+The backend server will typically run on `http://localhost:5000`.
+
+### 2. Start the Admin Panel (Frontend)
+Navigate to the `admin_panel` directory and run:
+```bash
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
+```
+The admin panel will typically run on `http://localhost:5173`.
+
+---
+*Note: Make sure your `.env` files are properly configured in both directories before starting the servers.*
