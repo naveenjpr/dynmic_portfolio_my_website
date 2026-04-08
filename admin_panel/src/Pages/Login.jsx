@@ -8,7 +8,7 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
-  const baseUrl = "http://localhost:5000/";
+  let baseurl = import.meta.env.VITE_API_URL;
   const dispatch = useDispatch();
   let loginData = useSelector((myAllState) => {
     return myAllState.loginStore.adminDetails;
