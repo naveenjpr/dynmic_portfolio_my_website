@@ -4,18 +4,21 @@ import Sidebar from '../../Middle-Section/Sidebar'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
 import { Link } from 'react-router';
+import Loading from '../../Common/Loading';
 
 export default function ViewSocial() {
   let baseurl = import.meta.env.VITE_API_URL;
 
   const [viewSocial, setViewSocial] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   const filteredSocial = viewSocial.filter((item) =>
     item.platform.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const socialView = () => {
+    setIsLoading(true);
     axios
       .post(
         `${baseurl}/api/backend/Social/view`,
@@ -30,6 +33,9 @@ export default function ViewSocial() {
       .catch((err) => {
         console.error(err);
         toast.error("Something went wrong");
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -118,78 +124,82 @@ export default function ViewSocial() {
             </div>
 
             {/* Table */}
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm text-left">
-                <thead className="bg-slate-700 text-gray-300 uppercase text-xs">
-                  <tr>
-                    <th className="px-6 py-4">No</th>
-                    <th className="px-6 py-4">Platform</th>
-                    <th className="px-6 py-4">URL</th>
-                    <th className="px-6 py-4">Icon</th>
-                    <th className="px-6 py-4">Status</th>
-                    <th className="px-6 py-4 text-center">Action</th>
-                  </tr>
-                </thead>
+            {isLoading ? (
+              <Loading />
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm text-left">
+                  <thead className="bg-slate-700 text-gray-300 uppercase text-xs">
+                    <tr>
+                      <th className="px-6 py-4">No</th>
+                      <th className="px-6 py-4">Platform</th>
+                      <th className="px-6 py-4">URL</th>
+                      <th className="px-6 py-4">Icon</th>
+                      <th className="px-6 py-4">Status</th>
+                      <th className="px-6 py-4 text-center">Action</th>
+                    </tr>
+                  </thead>
 
-                <tbody className="divide-y divide-slate-700">
-                  {filteredSocial.length > 0 ? (
-                    filteredSocial.map((v, i) => (
-                      <tr className="hover:bg-slate-700/50 transition cursor-default" key={v._id}>
-                        <td className="px-6 py-4">{i + 1}</td>
-                        <td className="px-6 py-4 font-medium capitalize">{v.platform}</td>
-                        <td className="px-6 py-4 max-w-xs truncate">
-                          <a href={v.url} target="_blank" rel="noreferrer" className="text-blue-400 hover:underline">
-                            {v.url}
-                          </a>
-                        </td>
-                        <td className="px-6 py-4">
-                          <div className="w-10 h-10 rounded-lg bg-slate-700 p-1 flex items-center justify-center">
-                            <img
-                              src={v.social_icon}
-                              alt={v.platform}
-                              className="max-w-full max-h-full rounded shadow-sm object-contain"
-                            />
+                  <tbody className="divide-y divide-slate-700">
+                    {filteredSocial.length > 0 ? (
+                      filteredSocial.map((v, i) => (
+                        <tr className="hover:bg-slate-700/50 transition cursor-default" key={v._id}>
+                          <td className="px-6 py-4">{i + 1}</td>
+                          <td className="px-6 py-4 font-medium capitalize">{v.platform}</td>
+                          <td className="px-6 py-4 max-w-xs truncate">
+                            <a href={v.url} target="_blank" rel="noreferrer" className="text-blue-400 hover:underline">
+                              {v.url}
+                            </a>
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className="w-10 h-10 rounded-lg bg-slate-700 p-1 flex items-center justify-center">
+                              <img
+                                src={v.social_icon}
+                                alt={v.platform}
+                                className="max-w-full max-h-full rounded shadow-sm object-contain"
+                              />
+                            </div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <button
+                              onClick={() => toggleStatus(v._id, v.status)}
+                              className={`cursor-pointer px-3 py-1 rounded-full text-xs font-medium transition-colors ${v.status
+                                  ? "bg-green-500/10 text-green-400 border border-green-500/20 hover:bg-green-500/20"
+                                  : "bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500/20"
+                                }`}
+                            >
+                              {v.status ? "Active" : "Inactive"}
+                            </button>
+                          </td>
+                          <td className="px-6 py-4 text-center space-x-3">
+                            <button className="cursor-pointer bg-blue-500/10 text-blue-400 hover:bg-blue-500/20 px-3 py-1.5 rounded-lg text-xs font-medium border border-blue-500/20 transition-all">
+                              <Link to={`/AddSocial/${v._id}`}>
+                                Edit
+                              </Link>
+                            </button>
+                            <button
+                              onClick={() => deleteItem(v._id)}
+                              className="cursor-pointer bg-red-500/10 text-red-400 hover:bg-red-500/20 px-3 py-1.5 rounded-lg text-xs font-medium border border-red-500/20 transition-all"
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan={6} className="text-center py-12 text-slate-400">
+                          <div className="flex flex-col items-center gap-2">
+                            <span className="text-2xl">🔍</span>
+                            <p>No social records found</p>
                           </div>
                         </td>
-                        <td className="px-6 py-4">
-                          <button
-                            onClick={() => toggleStatus(v._id, v.status)}
-                            className={`cursor-pointer px-3 py-1 rounded-full text-xs font-medium transition-colors ${v.status
-                                ? "bg-green-500/10 text-green-400 border border-green-500/20 hover:bg-green-500/20"
-                                : "bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500/20"
-                              }`}
-                          >
-                            {v.status ? "Active" : "Inactive"}
-                          </button>
-                        </td>
-                        <td className="px-6 py-4 text-center space-x-3">
-                          <button className="cursor-pointer bg-blue-500/10 text-blue-400 hover:bg-blue-500/20 px-3 py-1.5 rounded-lg text-xs font-medium border border-blue-500/20 transition-all">
-                            <Link to={`/AddSocial/${v._id}`}>
-                              Edit
-                            </Link>
-                          </button>
-                          <button
-                            onClick={() => deleteItem(v._id)}
-                            className="cursor-pointer bg-red-500/10 text-red-400 hover:bg-red-500/20 px-3 py-1.5 rounded-lg text-xs font-medium border border-red-500/20 transition-all"
-                          >
-                            Delete
-                          </button>
-                        </td>
                       </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan={6} className="text-center py-12 text-slate-400">
-                        <div className="flex flex-col items-center gap-2">
-                          <span className="text-2xl">🔍</span>
-                          <p>No social records found</p>
-                        </div>
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         </main>
       </div>

@@ -4,19 +4,21 @@ import Sidebar from '../../Middle-Section/Sidebar'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
 import { Link } from 'react-router';
-
+import Loading from '../../Common/Loading';
 export default function Viewskills() {
     let baseurl = import.meta.env.VITE_API_URL;
     console.log(baseurl);
 
     const [viewskills, setviewskills] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
+    const [isLoading, setIsLoading] = useState(true);
 
     const filteredSkills = viewskills.filter((skill) =>
         skill.SkillsName.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const skillsView = () => {
+        setIsLoading(true);
         axios
             .post(
                 `${baseurl}/api/backend/skills/view`,
@@ -31,6 +33,9 @@ export default function Viewskills() {
             .catch((err) => {
                 console.error(err);
                 toast.error("Something went wrong");
+            })
+            .finally(() => {
+                setIsLoading(false);
             });
     };
 
@@ -119,91 +124,95 @@ export default function Viewskills() {
                         </div>
 
                         {/* Table */}
-                        <div className="overflow-x-auto">
-                            <table className="w-full text-sm text-left">
-                                <thead className="bg-slate-700 text-gray-300 uppercase text-xs">
-                                    <tr>
-                                        <th className="px-4 py-3">No</th>
-                                        <th className="px-4 py-3">Skill Name</th>
-                                        <th className="px-4 py-3">Icon</th>
-                                        <th className="px-4 py-3">Parent</th>
-                                        <th className="px-4 py-3">%</th>
-                                        <th className="px-4 py-3">Status</th>
-                                        <th className="px-4 py-3 text-center">Action</th>
-                                    </tr>
-                                </thead>
-
-                                {
-                                    filteredSkills.length > 0 ? filteredSkills.map((v, i) => {
-                                        console.log("V", v)
-                                        return (
-                                            <tbody className="divide-y divide-slate-700" key={i}>
-                                                <tr className="hover:bg-slate-700 transition">
-                                                    <td className="px-4 py-3">{i + 1}</td>
-                                                    <td className="px-4 py-3 font-medium">{v.SkillsName}</td>
-
-                                                    {/* Icon */}
-                                                    <td className="px-4 py-3">
-                                                        <img
-                                                            src={v.SkillsIcon}
-                                                            alt="icon"
-                                                            className="w-8 h-8 rounded"
-                                                        />
-                                                    </td>
-
-                                                    <td className="px-4 py-3">{v.parentskills?.Skills}</td>
-
-                                                    {/* Percentage */}
-                                                    <td className="px-4 py-3">
-                                                        <div className="w-full bg-slate-600 rounded-full h-2 mb-1">
-                                                            <div 
-                                                                className="bg-yellow-400 h-2 rounded-full" 
-                                                                style={{ width: `${v.percentage}%` }}
-                                                            ></div>
-                                                        </div>
-                                                        <span className="text-xs text-gray-400">{v.percentage}%</span>
-                                                    </td>
-
-                                                    {/* Status */}
-                                                    <td className="px-4 py-3">
-                                                        {
-                                                            v.status == true ?
-
-                                                                <button className="cursor-pointer bg-green-500/20 text-green-400 px-2 py-1 rounded text-xs" onClick={() => toggleStatus(v._id, v.status)}>
-                                                                    Active
-                                                                </button> : <button className="cursor-pointer bg-red-500/20 text-white px-2 py-1 rounded text-xs" onClick={() => toggleStatus(v._id, v.status)}>
-                                                                    deactive
-                                                                </button>
-                                                        }
-
-
-                                                    </td>
-
-                                                    {/* Actions */}
-                                                    <td className="px-4 py-3 text-center space-x-2">
-                                                        <button className="cursor-pointer bg-blue-500 hover:bg-blue-600 px-3 py-1 rounded text-xs">
-                                                            <Link to={`/Addskills/${v._id}`}>
-                                                                Edit
-                                                            </Link>
-                                                        </button>
-                                                        <button className="cursor-pointer bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-xs" onClick={() => deleteitem(v._id)}>
-                                                            Delete
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        )
-                                    }) :
+                        {isLoading ? (
+                            <Loading />
+                        ) : (
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-sm text-left">
+                                    <thead className="bg-slate-700 text-gray-300 uppercase text-xs">
                                         <tr>
-                                            <td colSpan={7} className="text-center py-4">
-                                                No data found
-                                            </td>
+                                            <th className="px-4 py-3">No</th>
+                                            <th className="px-4 py-3">Skill Name</th>
+                                            <th className="px-4 py-3">Icon</th>
+                                            <th className="px-4 py-3">Parent</th>
+                                            <th className="px-4 py-3">%</th>
+                                            <th className="px-4 py-3">Status</th>
+                                            <th className="px-4 py-3 text-center">Action</th>
                                         </tr>
-                                }
+                                    </thead>
+
+                                    {
+                                        filteredSkills.length > 0 ? filteredSkills.map((v, i) => {
+                                            console.log("V", v)
+                                            return (
+                                                <tbody className="divide-y divide-slate-700" key={i}>
+                                                    <tr className="hover:bg-slate-700 transition">
+                                                        <td className="px-4 py-3">{i + 1}</td>
+                                                        <td className="px-4 py-3 font-medium">{v.SkillsName}</td>
+
+                                                        {/* Icon */}
+                                                        <td className="px-4 py-3">
+                                                            <img
+                                                                src={v.SkillsIcon}
+                                                                alt="icon"
+                                                                className="w-8 h-8 rounded"
+                                                            />
+                                                        </td>
+
+                                                        <td className="px-4 py-3">{v.parentskills?.Skills}</td>
+
+                                                        {/* Percentage */}
+                                                        <td className="px-4 py-3">
+                                                            <div className="w-full bg-slate-600 rounded-full h-2 mb-1">
+                                                                <div 
+                                                                    className="bg-yellow-400 h-2 rounded-full" 
+                                                                    style={{ width: `${v.percentage}%` }}
+                                                                ></div>
+                                                            </div>
+                                                            <span className="text-xs text-gray-400">{v.percentage}%</span>
+                                                        </td>
+
+                                                        {/* Status */}
+                                                        <td className="px-4 py-3">
+                                                            {
+                                                                v.status == true ?
+
+                                                                    <button className="cursor-pointer bg-green-500/20 text-green-400 px-2 py-1 rounded text-xs" onClick={() => toggleStatus(v._id, v.status)}>
+                                                                        Active
+                                                                    </button> : <button className="cursor-pointer bg-red-500/20 text-white px-2 py-1 rounded text-xs" onClick={() => toggleStatus(v._id, v.status)}>
+                                                                        deactive
+                                                                    </button>
+                                                            }
 
 
-                            </table>
-                        </div>
+                                                        </td>
+
+                                                        {/* Actions */}
+                                                        <td className="px-4 py-3 text-center space-x-2">
+                                                            <button className="cursor-pointer bg-blue-500 hover:bg-blue-600 px-3 py-1 rounded text-xs">
+                                                                <Link to={`/Addskills/${v._id}`}>
+                                                                    Edit
+                                                                </Link>
+                                                            </button>
+                                                            <button className="cursor-pointer bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-xs" onClick={() => deleteitem(v._id)}>
+                                                                Delete
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            )
+                                        }) :
+                                            <tr>
+                                                <td colSpan={7} className="text-center py-4">
+                                                    No data found
+                                                </td>
+                                            </tr>
+                                    }
+
+
+                                </table>
+                            </div>
+                        )}
 
                     </div>
                 </main>

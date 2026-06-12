@@ -5,12 +5,14 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Link } from "react-router";
 import { FaEdit, FaTrash, FaPlus, FaMapMarkerAlt, FaEnvelope, FaPhoneAlt, FaToggleOn, FaToggleOff, FaAddressCard } from "react-icons/fa";
-
+import Loading from "../../Common/Loading";
 export default function ViewConnectMe() {
   const [viewConnectMe, setviewConnectMe] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   let baseurl = import.meta.env.VITE_API_URL;
 
   const ConnectMeView = () => {
+    setIsLoading(true);
     axios
       .post(
         `${baseurl}/api/backend/ConnectMe/view`,
@@ -25,6 +27,9 @@ export default function ViewConnectMe() {
       .catch((err) => {
         console.error(err);
         toast.error("Something went wrong");
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -108,114 +113,120 @@ export default function ViewConnectMe() {
             </div>
 
             {/* Table Container */}
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr className="bg-slate-800/50 text-slate-400 text-xs uppercase tracking-wider">
-                    <th className="p-5 font-semibold">No.</th>
-                    <th className="p-5 font-semibold">Address Details</th>
-                    <th className="p-5 font-semibold">Contact Email</th>
-                    <th className="p-5 font-semibold">Phone Number</th>
-                    <th className="p-5 font-semibold">Status</th>
-                    <th className="p-5 font-semibold text-right">Actions</th>
-                  </tr>
-                </thead>
-
-                <tbody className="divide-y divide-slate-800/50">
-                  {viewConnectMe.length > 0 ? (
-                    viewConnectMe.map((item, index) => (
-                      <tr
-                        key={item._id || index}
-                        className="group hover:bg-slate-800/30 transition-colors"
-                      >
-                        <td className="p-5">
-                          <span className="text-slate-500 font-mono text-xs">{(index + 1).toString().padStart(2, '0')}</span>
-                        </td>
-
-                        <td className="p-5 max-w-xs">
-                          <div className="flex items-start gap-2">
-                            <FaMapMarkerAlt className="text-indigo-400 mt-1 shrink-0" />
-                            <span className="text-sm text-slate-300 leading-relaxed truncate group-hover:whitespace-normal transition-all">{item.Address}</span>
-                          </div>
-                        </td>
-
-                        <td className="p-5">
-                          <div className="flex items-center gap-2">
-                            <FaEnvelope className="text-indigo-400 shrink-0" />
-                            <span className="text-sm text-slate-300">{item.Email}</span>
-                          </div>
-                        </td>
-
-                        <td className="p-5 font-mono">
-                          <div className="flex items-center gap-2">
-                            <FaPhoneAlt className="text-indigo-400 shrink-0" />
-                            <span className="text-sm text-slate-300">{item.Phone}</span>
-                          </div>
-                        </td>
-
-                        <td className="p-5">
-                          <button
-                            onClick={() => toggleStatus(item._id, item.status)}
-                            className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                              item.status
-                                ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                                : "bg-rose-500/10 text-rose-400 border border-rose-500/20"
-                            }`}
-                          >
-                            {item.status ? (
-                              <><FaToggleOn className="text-sm" /> Active</>
-                            ) : (
-                              <><FaToggleOff className="text-sm" /> Inactive</>
-                            )}
-                          </button>
-                        </td>
-
-                        <td className="p-5">
-                          <div className="flex justify-end gap-3">
-                            <Link
-                              to={`/AddConnectMe/${item._id}`}
-                              className="p-2.5 bg-blue-500/10 text-blue-400 hover:bg-blue-500 hover:text-white rounded-lg transition-all shadow-lg shadow-blue-500/0 hover:shadow-blue-500/20"
-                              title="Edit Contact"
-                            >
-                              <FaEdit className="text-sm" />
-                            </Link>
-
-                            <button
-                              onClick={() => deleteitem(item._id)}
-                              className="p-2.5 bg-rose-500/10 text-rose-400 hover:bg-rose-500 hover:text-white rounded-lg transition-all shadow-lg shadow-rose-500/0 hover:shadow-rose-500/20 cursor-pointer"
-                              title="Delete Contact"
-                            >
-                              <FaTrash className="text-sm" />
-                            </button>
-                          </div>
-                        </td>
+            {isLoading ? (
+              <Loading />
+            ) : (
+              <>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="bg-slate-800/50 text-slate-400 text-xs uppercase tracking-wider">
+                        <th className="p-5 font-semibold">No.</th>
+                        <th className="p-5 font-semibold">Address Details</th>
+                        <th className="p-5 font-semibold">Contact Email</th>
+                        <th className="p-5 font-semibold">Phone Number</th>
+                        <th className="p-5 font-semibold">Status</th>
+                        <th className="p-5 font-semibold text-right">Actions</th>
                       </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan="6" className="p-20 text-center">
-                        <div className="flex flex-col items-center gap-3">
-                          <div className="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center">
-                            <FaAddressCard className="text-slate-600 text-2xl" />
-                          </div>
-                          <p className="text-slate-500 text-sm">No contact information found. Start by adding one!</p>
-                        </div>
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
+                    </thead>
 
-            {/* Footer Section */}
-            <div className="p-5 bg-slate-800/30 border-t border-slate-800/50 flex justify-between items-center">
-              <p className="text-xs text-slate-500 italic">
-                * Active contacts will be visible on your public portfolio website.
-              </p>
-              <span className="text-xs text-slate-400 font-mono">
-                Total Records: {viewConnectMe.length}
-              </span>
-            </div>
+                    <tbody className="divide-y divide-slate-800/50">
+                      {viewConnectMe.length > 0 ? (
+                        viewConnectMe.map((item, index) => (
+                          <tr
+                            key={item._id || index}
+                            className="group hover:bg-slate-800/30 transition-colors"
+                          >
+                            <td className="p-5">
+                              <span className="text-slate-500 font-mono text-xs">{(index + 1).toString().padStart(2, '0')}</span>
+                            </td>
+
+                            <td className="p-5 max-w-xs">
+                              <div className="flex items-start gap-2">
+                                <FaMapMarkerAlt className="text-indigo-400 mt-1 shrink-0" />
+                                <span className="text-sm text-slate-300 leading-relaxed truncate group-hover:whitespace-normal transition-all">{item.Address}</span>
+                              </div>
+                            </td>
+
+                            <td className="p-5">
+                              <div className="flex items-center gap-2">
+                                <FaEnvelope className="text-indigo-400 shrink-0" />
+                                <span className="text-sm text-slate-300">{item.Email}</span>
+                              </div>
+                            </td>
+
+                            <td className="p-5 font-mono">
+                              <div className="flex items-center gap-2">
+                                <FaPhoneAlt className="text-indigo-400 shrink-0" />
+                                <span className="text-sm text-slate-300">{item.Phone}</span>
+                              </div>
+                            </td>
+
+                            <td className="p-5">
+                              <button
+                                onClick={() => toggleStatus(item._id, item.status)}
+                                className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                                  item.status
+                                    ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                                    : "bg-rose-500/10 text-rose-400 border border-rose-500/20"
+                                }`}
+                              >
+                                {item.status ? (
+                                  <><FaToggleOn className="text-sm" /> Active</>
+                                ) : (
+                                  <><FaToggleOff className="text-sm" /> Inactive</>
+                                )}
+                              </button>
+                            </td>
+
+                            <td className="p-5">
+                              <div className="flex justify-end gap-3">
+                                <Link
+                                  to={`/AddConnectMe/${item._id}`}
+                                  className="p-2.5 bg-blue-500/10 text-blue-400 hover:bg-blue-500 hover:text-white rounded-lg transition-all shadow-lg shadow-blue-500/0 hover:shadow-blue-500/20"
+                                  title="Edit Contact"
+                                >
+                                  <FaEdit className="text-sm" />
+                                </Link>
+
+                                <button
+                                  onClick={() => deleteitem(item._id)}
+                                  className="p-2.5 bg-rose-500/10 text-rose-400 hover:bg-rose-500 hover:text-white rounded-lg transition-all shadow-lg shadow-rose-500/0 hover:shadow-rose-500/20 cursor-pointer"
+                                  title="Delete Contact"
+                                >
+                                  <FaTrash className="text-sm" />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan="6" className="p-20 text-center">
+                            <div className="flex flex-col items-center gap-3">
+                              <div className="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center">
+                                <FaAddressCard className="text-slate-600 text-2xl" />
+                              </div>
+                              <p className="text-slate-500 text-sm">No contact information found. Start by adding one!</p>
+                            </div>
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* Footer Section */}
+                <div className="p-5 bg-slate-800/30 border-t border-slate-800/50 flex justify-between items-center">
+                  <p className="text-xs text-slate-500 italic">
+                    * Active contacts will be visible on your public portfolio website.
+                  </p>
+                  <span className="text-xs text-slate-400 font-mono">
+                    Total Records: {viewConnectMe.length}
+                  </span>
+                </div>
+              </>
+            )}
           </div>
         </main>
       </div>

@@ -2,9 +2,32 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const adminModel = require("./src/models/AdminModel.Schema");
+const rateLimit = require("express-rate-limit");
+const compression = require("compression");
+const helmet = require("helmet");
 require("dotenv").config();
 
 const server = express();
+
+// Set security HTTP headers
+server.use(helmet());
+
+// Compress all responses
+server.use(compression());
+
+// Apply rate limiting middleware
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 100,
+  message: {
+    status: false,
+    message: "Too many requests from this IP. Please try again later."
+  },
+  standardHeaders: "draft-8",
+  legacyHeaders: false,
+});
+server.use(limiter);
+
 server.use(cors());
 
 server.use(express.json());

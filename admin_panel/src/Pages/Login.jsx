@@ -4,8 +4,10 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { saveLoginDetails } from "../Redux/AdminSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   let baseurl = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -15,6 +17,7 @@ export default function Login() {
 
   const checkLogin = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     // setError("");
     let obj = {
       adminName: e.target.adminName.value,
@@ -28,12 +31,15 @@ export default function Login() {
           dispatch(saveLoginDetails({ admin: res.data.admin }));
           navigate("/admin");
         } else {
-          // toast.error(res.data.message || "Login failed");
+          toast.error(res.data.message || "Login failed");
         }
       })
       .catch((err) => {
         console.error(err);
-        // toast.error("Server error. Please try again later.");
+        toast.error(err.response?.data?.message || "Server error. Please try again later.");
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -89,9 +95,21 @@ export default function Login() {
           {/* Button */}
           <button
             type="submit"
-            className="cursor-pointer w-full p-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold transition shadow-md"
+            disabled={isLoading}
+            className={`w-full p-3 text-white rounded-lg font-semibold transition shadow-md flex justify-center items-center gap-2 ${
+              isLoading
+                ? "bg-indigo-400 cursor-not-allowed"
+                : "bg-indigo-600 hover:bg-indigo-700 cursor-pointer"
+            }`}
           >
-            Login
+            {isLoading ? (
+              <>
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                Signing in...
+              </>
+            ) : (
+              "Login"
+            )}
           </button>
         </form>
       </div>

@@ -4,12 +4,14 @@ import Sidebar from "../../Middle-Section/Sidebar";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Link } from "react-router";
-
+import Loading from "../../Common/Loading";
 export default function Viewcategory() {
   const [viewcategory, setviewcategory] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   let baseurl = import.meta.env.VITE_API_URL;
 
   const categoryView = () => {
+    setIsLoading(true);
     axios
       .post(
         `${baseurl}/api/backend/category/view`,
@@ -24,6 +26,9 @@ export default function Viewcategory() {
       .catch((err) => {
         console.error(err);
         toast.error("Something went wrong");
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -98,74 +103,77 @@ export default function Viewcategory() {
               </button>
             </div>
 
-            {/* Table */}
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse">
-                {/* Head */}
-                <thead>
-                  <tr className="bg-slate-700 text-gray-300 text-sm">
-                    <th className="p-3 rounded-l-lg">No</th>
-                    <th className="p-3">Skills Name</th>
-                    <th className="p-3">Status</th>
-                    <th className="p-3 rounded-r-lg">Action</th>
-                  </tr>
-                </thead>
+            {isLoading ? (
+              <Loading />
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse">
+                  {/* Head */}
+                  <thead>
+                    <tr className="bg-slate-700 text-gray-300 text-sm">
+                      <th className="p-3 rounded-l-lg">No</th>
+                      <th className="p-3">Skills Name</th>
+                      <th className="p-3">Status</th>
+                      <th className="p-3 rounded-r-lg">Action</th>
+                    </tr>
+                  </thead>
 
-                {/* Body */}
-                <tbody className="text-sm">
-                  {viewcategory.length > 0 ? (
-                    viewcategory.map((item, index) => (
-                      <tr
-                        key={index}
-                        className="border-b border-slate-700 hover:bg-slate-700 transition"
-                      >
-                        <td className="p-3">{index + 1}</td>
+                  {/* Body */}
+                  <tbody className="text-sm">
+                    {viewcategory.length > 0 ? (
+                      viewcategory.map((item, index) => (
+                        <tr
+                          key={index}
+                          className="border-b border-slate-700 hover:bg-slate-700 transition"
+                        >
+                          <td className="p-3">{index + 1}</td>
 
-                        <td className="p-3">{item.Skills}</td>
+                          <td className="p-3">{item.Skills}</td>
 
-                        {/* Status */}
-                        <td className="p-3">
-                          <button
-                            onClick={() => toggleStatus(item._id, item.status)}
-                            className={`px-3 py-1 cursor-pointer rounded-full text-xs ${item.status == true
-                                ? "bg-green-500/20 text-green-400"
-                                : "bg-red-500/20 text-red-400"
-                              }`}
-                          >
-                            {item.status ? "Active" : "Inactive"}
-                          </button>
-                        </td>
-
-                        {/* Actions */}
-                        <td className="p-3 flex gap-2">
-                          <Link
-                            to={`/Addcategory/${item._id}`}
-                            className="bg-blue-500 hover:bg-blue-600 px-3 py-1 rounded text-xs cursor-pointer"
-                          >
-                            <button className="bg-blue-500 hover:bg-blue-600 px-3 py-1 rounded text-xs cursor-pointer">
-                              Edit
+                          {/* Status */}
+                          <td className="p-3">
+                            <button
+                              onClick={() => toggleStatus(item._id, item.status)}
+                              className={`px-3 py-1 cursor-pointer rounded-full text-xs ${item.status == true
+                                  ? "bg-green-500/20 text-green-400"
+                                  : "bg-red-500/20 text-red-400"
+                                }`}
+                            >
+                              {item.status ? "Active" : "Inactive"}
                             </button>
-                          </Link>
+                          </td>
 
-                          <button
-                            className="bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-xs cursor-pointer"
-                            onClick={() => deleteitem(item._id)}
-                          >
-                            Delete
-                          </button>
+                          {/* Actions */}
+                          <td className="p-3 flex gap-2">
+                            <Link
+                              to={`/Addcategory/${item._id}`}
+                              className="bg-blue-500 hover:bg-blue-600 px-3 py-1 rounded text-xs cursor-pointer"
+                            >
+                              <button className="bg-blue-500 hover:bg-blue-600 px-3 py-1 rounded text-xs cursor-pointer">
+                                Edit
+                              </button>
+                            </Link>
+
+                            <button
+                              className="bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-xs cursor-pointer"
+                              onClick={() => deleteitem(item._id)}
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="4" className="text-center p-4 text-gray-400">
+                          No data found
                         </td>
                       </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan="4" className="text-center p-4 text-gray-400">
-                        No data found
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         </main>
       </div>

@@ -10,18 +10,17 @@ exports.login = async (req, res) => {
       });
     }
 
-    const admin = await adminModel.findOne({ adminName, adminPassword });
+    const admin = await adminModel.findOne({ adminName });
     if (!admin) {
       return res
         .status(401)
-        .json({ success: false, message: "Invalid adminName or password" });
+        .json({ success: false, message: "Invalid adminName" });
     }
 
-    // For demo: plain text password check (in production, use hashed passwords)
     if (admin.adminPassword !== adminPassword) {
       return res
         .status(401)
-        .json({ success: false, message: "Invalid adminName or password" });
+        .json({ success: false, message: "Invalid admin Password" });
     }
 
     // You can generate a JWT token here if needed
