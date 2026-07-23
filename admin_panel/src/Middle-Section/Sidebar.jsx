@@ -3,8 +3,10 @@ import { NavLink } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
 import { FaBook, FaUserGraduate, FaLayerGroup, FaCode, FaAward, FaEnvelope, FaAddressCard, FaShareAlt, FaBriefcase } from "react-icons/fa";
 import { MdWork } from "react-icons/md";
+import { useSidebar } from "../Context/SidebarContext";
 
 export default function Sidebar() {
+  const { sidebarOpen } = useSidebar();
   const [openIndex, setOpenIndex] = useState(null);
 
   const MYdropDown = [
@@ -85,7 +87,7 @@ export default function Sidebar() {
     setOpenIndex(openIndex === index ? null : index);
   };
   return (
-    <aside className=" h-screen  sticky top-0">
+    <aside className="w-full h-full overflow-y-auto">
       {/* LOGO / TITLE */}
       <div className="p-5 border-b border-slate-700">
         <h2 className="text-xl font-bold text-white tracking-wide">
@@ -94,7 +96,7 @@ export default function Sidebar() {
       </div>
 
       {/* MENU */}
-      <div className="p-3">
+      <div className="p-3 ">
         <ul className="flex flex-col gap-2">
           {MYdropDown.map((item, index) => (
             <li key={index}>
