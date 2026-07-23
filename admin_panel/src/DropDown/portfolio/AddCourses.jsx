@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import Header from "../../Common/Header";
-import Sidebar from "../../Middle-Section/Sidebar";
+import AdminLayout from "../../Common/AdminLayout";
 import {
   FaPlusCircle,
   FaUpload,
@@ -154,13 +153,7 @@ export default function AddCourses() {
   }, [paramsid]);
 
   return (
-    <div className="min-h-screen bg-[#0f172a] text-slate-200">
-      <Header />
-      <div className="flex">
-        {/* Sidebar Container */}
-        <div className="hidden md:block w-72 shrink-0 border-r border-slate-800">
-          <Sidebar />
-        </div>
+    <AdminLayout>
 
         {/* Main Content Area */}
         <main className="flex-1 p-4 md:p-8 lg:p-12 overflow-x-hidden">
@@ -180,7 +173,7 @@ export default function AddCourses() {
             {/* Form Card */}
             <div className="relative group">
               {/* Decorative Background Glow */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+              <div className="absolute -inset-1 bg-linear-to-r from-indigo-500 to-purple-600 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
 
               <div className="relative bg-slate-900/50 backdrop-blur-xl border border-slate-800 p-6 md:p-10 rounded-2xl shadow-2xl">
                 <form
@@ -208,7 +201,7 @@ export default function AddCourses() {
                                 e.stopPropagation();
                                 setImagePreview(null);
                               }}
-                              className="p-4 bg-red-500 hover:bg-red-600 text-white rounded-full shadow-lg transform hover:scale-110 transition-all duration-200"
+                              className="p-4 bg-red-500 hover:bg-red-600 text-white rounded-full shadow-lg transform hover:scale-110 transition-all duration-200 cursor-pointer"
                             >
                               <FaTimes size={20} />
                             </button>
@@ -293,13 +286,13 @@ export default function AddCourses() {
                       <button
                         type="button"
                         onClick={(e) => handleAddTech(e)}
-                        className="px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl transition-all shadow-lg shadow-indigo-500/20 active:scale-95 flex items-center gap-2"
+                        className="px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl transition-all shadow-lg shadow-indigo-500/20 active:scale-95 flex items-center gap-2 cursor-pointer"
                       >
                         <FaPlusCircle /> Add
                       </button>
                     </div>
 
-                    <div className="flex flex-wrap gap-2 pt-2 min-h-[48px]">
+                    <div className="flex flex-wrap gap-2 pt-2 min-h-12">
                       {technologies.length > 0 ? (
                         technologies.map((tech, index) => (
                           <span
@@ -310,7 +303,7 @@ export default function AddCourses() {
                             <button
                               type="button"
                               onClick={() => handleRemoveTech(tech)}
-                              className="text-slate-500 hover:text-red-400 p-0.5 rounded transition-colors"
+                              className="text-slate-500 hover:text-red-400 p-0.5 rounded transition-colors cursor-pointer"
                             >
                               <FaTimes size={12} />
                             </button>
@@ -373,13 +366,13 @@ export default function AddCourses() {
                   <div className="flex flex-col sm:flex-row gap-4 pt-10 border-t border-slate-800">
                     <button
                       type="submit"
-                      className="flex-1 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-lg rounded-xl transition-all shadow-xl shadow-indigo-500/10 active:scale-[0.98] transform"
+                      className="flex-1 py-4 bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-lg rounded-xl transition-all shadow-xl shadow-indigo-500/10 active:scale-[0.98] transform cursor-pointer"
                     >
                       {paramsid ? "Save Changes" : "Create Project Showcase"}
                     </button>
                     <button
                       type="reset"
-                      className="px-10 py-4 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-lg rounded-xl transition-all border border-slate-700 active:scale-95"
+                      className="px-10 py-4 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-lg rounded-xl transition-all border border-slate-700 active:scale-95 cursor-pointer"
                     >
                       Reset
                     </button>
@@ -389,7 +382,6 @@ export default function AddCourses() {
             </div>
           </div>
         </main>
-      </div>
-    </div>
+    </AdminLayout>
   );
 }

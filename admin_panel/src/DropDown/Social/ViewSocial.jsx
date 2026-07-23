@@ -1,6 +1,5 @@
 import axios from 'axios';
-import Header from '../../Common/Header'
-import Sidebar from '../../Middle-Section/Sidebar'
+import AdminLayout from '../../Common/AdminLayout'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
 import { Link } from 'react-router';
@@ -89,15 +88,7 @@ export default function ViewSocial() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#020202] text-slate-200">
-      <Header />
-
-      <div className="flex">
-        {/* Sidebar */}
-        <div className="hidden md:block w-72 shrink-0 border-r border-slate-800">
-          <Sidebar />
-        </div>
-
+    <AdminLayout>
         {/* Main Content */}
         <main className="flex-1 p-4 md:p-8 lg:p-12">
           <div className="bg-slate-800 rounded-2xl shadow-lg overflow-hidden">
@@ -202,7 +193,6 @@ export default function ViewSocial() {
             )}
           </div>
         </main>
-      </div>
-    </div>
+    </AdminLayout>
   )
 }

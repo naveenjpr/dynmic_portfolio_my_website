@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-import Header from "../../Common/Header";
-import Sidebar from "../../Middle-Section/Sidebar";
+﻿import React, { useEffect, useState } from "react";
+import AdminLayout from "../../Common/AdminLayout";
 import { FaUpload, FaTimes, FaCloudUploadAlt } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router";
 import axios from "axios";
@@ -130,13 +129,7 @@ export default function AddResume() {
     }, []);
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-slate-200">
-            <Header />
-            <div className="flex">
-                {/* Sidebar */}
-                <div className="hidden md:block w-72 shrink-0 border-r border-slate-800">
-                    <Sidebar />
-                </div>
+        <AdminLayout>
 
                 {/* Main Content */}
                 <main className="flex-1 p-4 md:p-8 lg:p-12">
@@ -165,7 +158,7 @@ export default function AddResume() {
                                         </label>
                                         <div className="relative group/upload border-2 border-dashed border-slate-700 hover:border-indigo-500/50 rounded-2xl p-2 transition-all duration-300 bg-slate-950/50 overflow-hidden">
                                             {imagePreview ? (
-                                                <div className="relative aspect-auto min-h-[200px] w-full rounded-xl overflow-hidden shadow-2xl flex items-center justify-center bg-slate-800">
+                                                <div className="relative aspect-auto min-h-50 w-full rounded-xl overflow-hidden shadow-2xl flex items-center justify-center bg-slate-800">
                                                     {imagePreview === "pdf"
                                                         ? (
                                                             <div className="flex flex-col items-center p-8 text-indigo-400">
@@ -176,7 +169,7 @@ export default function AddResume() {
                                                             <img
                                                                 src={imagePreview}
                                                                 alt="Resume Preview"
-                                                                className="max-h-[400px] w-auto object-contain transition-transform duration-500 group-hover/upload:scale-105"
+                                                                className="max-h-100 w-auto object-contain transition-transform duration-500 group-hover/upload:scale-105"
                                                             />
                                                         )}
                                                     <div className="absolute inset-0 bg-slate-900/60 opacity-0 group-hover/upload:opacity-100 transition-opacity flex items-center justify-center">
@@ -238,13 +231,13 @@ export default function AddResume() {
                                     <div className="flex flex-col sm:flex-row gap-4 pt-10 border-t border-slate-800">
                                         <button
                                             type="submit"
-                                            className="flex-1 py-4 bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-lg rounded-xl transition-all shadow-xl shadow-indigo-500/10 active:scale-[0.98] transform flex items-center justify-center gap-2"
+                                            className="flex-1 py-4 bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-lg rounded-xl transition-all shadow-xl shadow-indigo-500/10 active:scale-[0.98] transform flex items-center justify-center gap-2 cursor-pointer"
                                         >
                                             Upload Resume
                                         </button>
                                         <button
                                             type="reset"
-                                            className="px-10 py-4 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-lg rounded-xl transition-all border border-slate-700 active:scale-95"
+                                            className="px-10 py-4 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-lg rounded-xl transition-all border border-slate-700 active:scale-95 cursor-pointer"
                                         >
                                             Reset
                                         </button>
@@ -254,8 +247,7 @@ export default function AddResume() {
                         </div>
                     </div>
                 </main>
-            </div>
-        </div>
+        </AdminLayout>
     );
 }
 

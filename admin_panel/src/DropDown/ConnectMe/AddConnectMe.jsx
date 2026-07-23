@@ -1,6 +1,5 @@
-import axios from "axios";
-import Header from "../../Common/Header";
-import Sidebar from "../../Middle-Section/Sidebar";
+﻿import axios from "axios";
+import AdminLayout from "../../Common/AdminLayout";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
@@ -91,14 +90,7 @@ export default function AddConnectMe() {
   };
 
   return (
-    <div className="min-h-screen bg-[#020202] text-slate-200">
-      <Header />
-
-      <div className="flex">
-        {/* Sidebar */}
-        <div className="hidden md:block w-72 shrink-0 border-r border-slate-800/50">
-          <Sidebar />
-        </div>
+    <AdminLayout>
 
         {/* Main Content */}
         <main className="flex-1 p-4 md:p-8 lg:p-12">
@@ -191,14 +183,14 @@ export default function AddConnectMe() {
               <div className="md:col-span-2 flex flex-col sm:flex-row gap-4 pt-6 mt-6 border-t border-slate-800/50">
                 <button
                   type="submit"
-                  className="flex-1 flex justify-center items-center gap-2 bg-linear-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white px-8 py-3.5 rounded-xl text-sm font-bold shadow-lg shadow-indigo-500/20 active:scale-[0.98] transition-all"
+                  className="flex-1 flex justify-center items-center gap-2 bg-linear-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white px-8 py-3.5 rounded-xl text-sm font-bold shadow-lg shadow-indigo-500/20 active:scale-[0.98] transition-all cursor-pointer"
                 >
                   <FaSave /> {paramsId ? "Update Information" : "Save Information"}
                 </button>
 
                 <button
                   type="reset"
-                  className="flex justify-center items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-300 px-8 py-3.5 rounded-xl text-sm font-semibold transition-all border border-slate-700"
+                  className="flex justify-center items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-300 px-8 py-3.5 rounded-xl text-sm font-semibold transition-all border border-slate-700 cursor-pointer"
                   onClick={() => setFormData({ Address: "", Email: "", Phone: "", status: true })}
                 >
                   <FaUndo className="text-xs" /> Reset Form
@@ -207,7 +199,6 @@ export default function AddConnectMe() {
             </form>
           </div>
         </main>
-      </div>
-    </div>
+    </AdminLayout>
   );
 }

@@ -1,6 +1,5 @@
 import axios from 'axios';
-import Header from '../../Common/Header'
-import Sidebar from '../../Middle-Section/Sidebar'
+import AdminLayout from '../../Common/AdminLayout'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
 import { Link } from 'react-router';
@@ -88,14 +87,7 @@ export default function Viewskills() {
         skillsView();
     }, []);
     return (
-        <div className="min-h-screen bg-slate-900 text-white w-full">
-            <Header />
-
-            <div className="flex">
-                {/* Sidebar */}
-                <div className="hidden md:block w-64 border-r border-slate-800">
-                    <Sidebar />
-                </div>
+        <AdminLayout>
 
                 {/* Main Content */}
                 <main className="flex-1 p-4 md:p-8">
@@ -216,7 +208,6 @@ export default function Viewskills() {
 
                     </div>
                 </main>
-            </div>
-        </div>
+        </AdminLayout>
     )
 }

@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import Header from "../../Common/Header";
-import Sidebar from "../../Middle-Section/Sidebar";
+import AdminLayout from "../../Common/AdminLayout";
 import { FaGithub } from "react-icons/fa6";
 import { FaEdit, FaExternalLinkAlt, FaTrash } from "react-icons/fa";
 import axios from "axios";
@@ -78,13 +77,7 @@ export default function ViewCourses() {
     viewApi();
   }, []);
   return (
-    <div className="min-h-screen bg-slate-900 text-white w-full">
-      <Header />
-
-      <div className="flex">
-        <div className="hidden md:block w-64 border-r border-slate-800 ">
-          <Sidebar />
-        </div>
+    <AdminLayout>
 
         <main className="flex-1 p-6 md:p-10 ">
           {/* HEADER */}
@@ -105,7 +98,7 @@ export default function ViewCourses() {
             <div className="bg-slate-800 rounded-2xl shadow-xl overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
-                  <thead className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
+                  <thead className="bg-linear-to-r from-indigo-600 to-purple-600 text-white">
                     <tr>
                       <th className="p-4">#</th>
                       <th className="p-4">Image</th>
@@ -231,7 +224,6 @@ export default function ViewCourses() {
             </div>
           )}
         </main>
-      </div>
-    </div>
+    </AdminLayout>
   );
 }

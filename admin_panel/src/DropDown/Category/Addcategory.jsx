@@ -1,6 +1,5 @@
-import axios from "axios";
-import Header from "../../Common/Header";
-import Sidebar from "../../Middle-Section/Sidebar";
+﻿import axios from "axios";
+import AdminLayout from "../../Common/AdminLayout";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
@@ -86,14 +85,7 @@ export default function Addcategory() {
   };
 
   return (
-    <div className="min-h-screen bg-[#020202] text-slate-200">
-      <Header />
-
-      <div className="flex">
-        {/* Sidebar */}
-        <div className="hidden md:block w-72 shrink-0 border-r border-slate-800">
-          <Sidebar />
-        </div>
+    <AdminLayout>
 
         {/* Main Content */}
         <main className="flex-1 p-4 md:p-8 lg:p-12">
@@ -145,14 +137,14 @@ export default function Addcategory() {
               <div className="flex gap-3 pt-4">
                 <button
                   type="submit"
-                  className="bg-yellow-500 hover:bg-yellow-600 text-black px-6 py-2 rounded-lg text-sm font-medium"
+                  className="bg-yellow-500 hover:bg-yellow-600 text-black px-6 py-2 rounded-lg text-sm font-medium cursor-pointer"
                 >
                   Submit
                 </button>
 
                 <button
                   type="reset"
-                  className="bg-slate-600 hover:bg-slate-700 px-6 py-2 rounded-lg text-sm"
+                  className="bg-slate-600 hover:bg-slate-700 px-6 py-2 rounded-lg text-sm cursor-pointer"
                   onClick={() => setFormData({ name: "", status: "active" })}
                 >
                   Reset
@@ -161,7 +153,6 @@ export default function Addcategory() {
             </form>
           </div>
         </main>
-      </div>
-    </div>
+    </AdminLayout>
   );
 }

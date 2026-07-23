@@ -16,6 +16,7 @@ import ViewResume from "./DropDown/Resume/ViewResume";
 import Login from "./Pages/Login";
 import { store } from "./Redux/store";
 import { Provider } from "react-redux";
+import { SidebarProvider } from "./Context/SidebarContext";
 import Addcategory from "./DropDown/Category/Addcategory";
 import Viewcategory from "./DropDown/Category/Viewcategory";
 import { ToastContainer, toast } from "react-toastify";
@@ -121,7 +122,9 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-    <ToastContainer />
-    <RouterProvider router={router} />
+    <SidebarProvider>
+      <ToastContainer />
+      <RouterProvider router={router} />
+    </SidebarProvider>
   </Provider>,
 );

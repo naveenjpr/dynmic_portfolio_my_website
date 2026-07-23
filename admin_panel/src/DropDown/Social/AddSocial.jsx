@@ -1,6 +1,5 @@
 import axios from "axios";
-import Header from "../../Common/Header";
-import Sidebar from "../../Middle-Section/Sidebar";
+import AdminLayout from "../../Common/AdminLayout";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
@@ -90,15 +89,7 @@ export default function AddSocial() {
   };
 
   return (
-    <div className="min-h-screen bg-[#020202] text-slate-200">
-      <Header />
-
-      <div className="flex">
-        {/* Sidebar */}
-        <div className="hidden md:block w-72 shrink-0 border-r border-slate-800">
-          <Sidebar />
-        </div>
-
+    <AdminLayout>
         {/* Main Content */}
         <main className="flex-1 p-4 md:p-8 lg:p-12">
           <div className="max-w-2xl mx-auto bg-slate-800 rounded-2xl shadow-lg p-6 md:p-8">
@@ -172,7 +163,7 @@ export default function AddSocial() {
               <div className="flex gap-4 pt-4">
                 <button
                   type="submit"
-                  className="flex-1 bg-yellow-500 hover:bg-yellow-600 text-black py-3 rounded-xl text-sm font-bold transition-transform active:scale-[0.98] shadow-lg shadow-yellow-500/10"
+                  className="flex-1 bg-yellow-500 hover:bg-yellow-600 text-black py-3 rounded-xl text-sm font-bold transition-transform active:scale-[0.98] shadow-lg shadow-yellow-500/10 cursor-pointer"
                 >
                   {paramsId ? "Update Record" : "Save Record"}
                 </button>
@@ -180,7 +171,7 @@ export default function AddSocial() {
                 <button
                   type="button"
                   onClick={() => navigate("/ViewSocial")}
-                  className="px-8 py-3 rounded-xl bg-slate-700 hover:bg-slate-600 text-sm font-medium transition-colors"
+                  className="px-8 py-3 rounded-xl bg-slate-700 hover:bg-slate-600 text-sm font-medium transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -188,7 +179,6 @@ export default function AddSocial() {
             </form>
           </div>
         </main>
-      </div>
-    </div>
+    </AdminLayout>
   );
 }

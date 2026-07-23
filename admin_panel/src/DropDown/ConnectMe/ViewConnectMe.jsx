@@ -1,6 +1,5 @@
 import axios from "axios";
-import Header from "../../Common/Header";
-import Sidebar from "../../Middle-Section/Sidebar";
+import AdminLayout from "../../Common/AdminLayout";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Link } from "react-router";
@@ -82,14 +81,7 @@ export default function ViewConnectMe() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#020202] text-slate-200">
-      <Header />
-
-      <div className="flex">
-        {/* Sidebar */}
-        <div className="hidden md:block w-72 shrink-0 border-r border-slate-800/50">
-          <Sidebar />
-        </div>
+    <AdminLayout>
 
         {/* Main Content */}
         <main className="flex-1 p-4 md:p-8 lg:p-12">
@@ -107,7 +99,7 @@ export default function ViewConnectMe() {
                 to="/AddConnectMe"
                 className="group flex items-center gap-2 bg-linear-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white px-6 py-3 rounded-xl text-sm font-bold shadow-lg shadow-indigo-500/20 transition-all active:scale-95"
               >
-                <FaPlus className="group-hover:rotate-90 transition-transform transition-all" />
+                <FaPlus className="group-hover:rotate-90 transition-transform" />
                 Add New Contact
               </Link>
             </div>
@@ -229,7 +221,6 @@ export default function ViewConnectMe() {
             )}
           </div>
         </main>
-      </div>
-    </div>
+    </AdminLayout>
   );
 }

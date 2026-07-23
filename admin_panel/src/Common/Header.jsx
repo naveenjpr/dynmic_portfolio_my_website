@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { IoReorderThreeOutline } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
+import { IoReorderThree } from "react-icons/io5";
+
 import {
   Disclosure,
   DisclosureButton,
@@ -14,7 +16,9 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { logOut } from "../Redux/AdminSlice";
+import { useSidebar } from "../Context/SidebarContext";
 export default function Header() {
+  const { sidebarOpen, toggleSidebar } = useSidebar();
   let loginData = useSelector((myAllState) => {
     return myAllState.loginStore.adminDetails;
   });
@@ -45,8 +49,17 @@ export default function Header() {
   return (
     <header className="w-full sticky top-0 z-50 ">
       <Disclosure as="nav" className="relative bg-gray-800 ">
-        <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+        <div className="w-full px-2 sm:px-6 lg:px-8">
           <div className="relative flex h-16 items-center justify-between">
+            <button
+              onClick={toggleSidebar}
+              className="flex items-center justify-center p-2 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition-all duration-200 cursor-pointer"
+              title={sidebarOpen ? "Hide Sidebar" : "Show Sidebar"}
+            >
+              <IoReorderThree
+                className={`text-2xl transition-transform duration-300 ${sidebarOpen ? "rotate-0" : "rotate-180"}`}
+              />
+            </button>
             <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
               {/* Mobile menu button*/}
               <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-white/5 hover:text-white focus:outline-2 focus:-outline-offset-1 focus:outline-indigo-500">
@@ -56,6 +69,7 @@ export default function Header() {
                   aria-hidden="true"
                   className="block size-6 group-data-open:hidden"
                 />
+
                 <XMarkIcon
                   aria-hidden="true"
                   className="hidden size-6 group-data-open:block"

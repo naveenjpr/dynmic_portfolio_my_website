@@ -1,6 +1,5 @@
-import axios from 'axios';
-import Header from '../../Common/Header'
-import Sidebar from '../../Middle-Section/Sidebar'
+﻿import axios from 'axios';
+import AdminLayout from '../../Common/AdminLayout'
 import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router';
 import { toast } from 'react-toastify';
@@ -164,14 +163,7 @@ export default function Addskills() {
     }, []);
 
     return (
-        <div className="min-h-screen bg-slate-900 text-white">
-            <Header />
-
-            <div className="flex">
-                {/* Sidebar */}
-                <div className="hidden md:block w-64 border-r border-slate-800">
-                    <Sidebar />
-                </div>
+        <AdminLayout>
 
                 {/* Main Content */}
                 <main className="flex-1 p-4 md:p-8">
@@ -292,14 +284,14 @@ export default function Addskills() {
                             <div className="flex gap-3 pt-4">
                                 <button
                                     type="submit"
-                                    className="bg-yellow-500 hover:bg-yellow-600 text-black px-5 py-2 rounded-lg text-sm"
+                                    className="bg-yellow-500 hover:bg-yellow-600 text-black px-5 py-2 rounded-lg text-sm cursor-pointer"
                                 >
                                     Save Skill
                                 </button>
 
                                 <button
                                     type="reset"
-                                    className="bg-slate-600 hover:bg-slate-500 px-5 py-2 rounded-lg text-sm"
+                                    className="bg-slate-600 hover:bg-slate-500 px-5 py-2 rounded-lg text-sm cursor-pointer"
                                 >
                                     Reset
                                 </button>
@@ -309,7 +301,6 @@ export default function Addskills() {
                     </div>
 
                 </main>
-            </div>
-        </div>
+        </AdminLayout>
     )
 }

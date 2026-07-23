@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Header from "../../Common/Header";
-import Sidebar from "../../Middle-Section/Sidebar";
+import AdminLayout from "../../Common/AdminLayout";
 import { FaEnvelope, FaPhone, FaUser, FaCalendarAlt, FaSearch } from "react-icons/fa";
 import axios from "axios";
 import Loading from "../../Common/Loading";
@@ -40,19 +39,13 @@ export default function ViewClientSendMessage() {
     );
 
     return (
-        <div className="min-h-screen bg-slate-900 text-slate-100 font-sans">
-            <Header />
-
-            <div className="flex">
-                <div className="hidden lg:block w-70 min-h-[calc(100vh-64px)] border-r border-slate-800">
-                    <Sidebar />
-                </div>
+        <AdminLayout>
 
                 <main className="flex-1 p-4 md:p-8 space-y-8">
                     {/* PAGE HEADER */}
                     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50 backdrop-blur-sm shadow-xl">
                         <div>
-                            <h1 className="text-3xl font-extrabold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
+                            <h1 className="text-3xl font-extrabold bg-linear-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
                                 📩 Client Inquires
                             </h1>
                             <p className="text-slate-400 text-sm mt-1">Manage and respond to messages from your portfolio visitors.</p>
@@ -172,7 +165,6 @@ export default function ViewClientSendMessage() {
                         )}
                     </div>
                 </main>
-            </div>
-        </div>
+        </AdminLayout>
     );
 }

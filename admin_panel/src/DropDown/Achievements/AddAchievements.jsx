@@ -1,8 +1,7 @@
-import axios from 'axios';
+﻿import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router';
-import Header from "../../Common/Header";
-import Sidebar from "../../Middle-Section/Sidebar";
+import AdminLayout from "../../Common/AdminLayout";
 import { toast } from 'react-toastify';
 export default function AddAchievements() {
 
@@ -109,14 +108,7 @@ export default function AddAchievements() {
         }
     };
     return (
-        <div className="min-h-screen bg-[#020202] text-slate-200">
-            <Header />
-
-            <div className="flex">
-                {/* Sidebar */}
-                <div className="hidden md:block w-72 shrink-0 border-r border-slate-800">
-                    <Sidebar />
-                </div>
+        <AdminLayout>
                 {/* Main Content */}
                 <main className="flex-1 p-4 md:p-8 lg:p-12">
                     <div className="max-w-2xl mx-auto bg-slate-800/40 backdrop-blur-xl border border-slate-700/50 rounded-3xl shadow-2xl p-6 md:p-10">
@@ -228,14 +220,14 @@ export default function AddAchievements() {
                             <div className="flex flex-col sm:flex-row gap-4 pt-6">
                                 <button
                                     type="submit"
-                                    className="flex-1 bg-linear-to-r from-yellow-400 to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 text-black px-8 py-4 rounded-xl text-sm font-bold uppercase tracking-wider transition-all shadow-lg shadow-yellow-500/20 active:scale-95"
+                                    className="flex-1 bg-linear-to-r from-yellow-400 to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 text-black px-8 py-4 rounded-xl text-sm font-bold uppercase tracking-wider transition-all shadow-lg shadow-yellow-500/20 active:scale-95 cursor-pointer"
                                 >
                                     {paramsId ? "Update Achievement" : "Create Achievement"}
                                 </button>
 
                                 <button
                                     type="reset"
-                                    className="sm:w-32 bg-slate-700/50 hover:bg-slate-700 text-slate-300 border border-slate-600 px-6 py-4 rounded-xl text-sm font-medium transition-all"
+                                    className="sm:w-32 bg-slate-700/50 hover:bg-slate-700 text-slate-300 border border-slate-600 px-6 py-4 rounded-xl text-sm font-medium transition-all cursor-pointer"
                                     onClick={() => {
                                         setFormData({ Description: "", image: "", status: true });
                                         setPreImagePath('');
@@ -249,7 +241,6 @@ export default function AddAchievements() {
                         </form>
                     </div>
                 </main>
-            </div>
-        </div>
+        </AdminLayout>
     );
 }

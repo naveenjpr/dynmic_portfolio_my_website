@@ -1,6 +1,5 @@
 import axios from "axios";
-import Header from "../../Common/Header";
-import Sidebar from "../../Middle-Section/Sidebar";
+import AdminLayout from "../../Common/AdminLayout";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Link } from "react-router";
@@ -82,15 +81,7 @@ export default function ViewExperience() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white w-full">
-      <Header />
-
-      <div className="flex">
-        {/* Sidebar */}
-        <div className="hidden md:block w-64 border-r border-slate-800">
-          <Sidebar />
-        </div>
-
+    <AdminLayout>
         {/* Main Content */}
         <main className="flex-1 p-4 md:p-8 overflow-x-auto">
           <div className="bg-slate-800 rounded-2xl shadow-lg p-5">
@@ -165,7 +156,7 @@ export default function ViewExperience() {
                             }) : "Present"
                           }</td>
                           <td className="p-3">{item.duration}</td>
-                          <td className="p-3 max-w-[150px] truncate" title={Array.isArray(item.description) ? item.description.join(", ") : item.description}>
+                          <td className="p-3 max-w-37.5 truncate" title={Array.isArray(item.description) ? item.description.join(", ") : item.description}>
                             {Array.isArray(item.description) ? item.description.join(", ") : item.description}
                           </td>
                           <td className="p-3">
@@ -222,7 +213,6 @@ export default function ViewExperience() {
             )}
           </div>
         </main>
-      </div>
-    </div>
+    </AdminLayout>
   );
 }

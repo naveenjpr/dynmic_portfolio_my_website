@@ -1,6 +1,5 @@
 import axios from "axios";
-import Header from "../../Common/Header";
-import Sidebar from "../../Middle-Section/Sidebar";
+import AdminLayout from "../../Common/AdminLayout";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
@@ -120,14 +119,7 @@ export default function AddExperience() {
   };
 
   return (
-    <div className="min-h-screen bg-[#020202] text-slate-200">
-      <Header />
-
-      <div className="flex">
-        <div className="hidden md:block w-72 shrink-0 border-r border-slate-800">
-          <Sidebar />
-        </div>
-
+    <AdminLayout>
         <main className="flex-1 p-4 md:p-8 lg:p-12">
           <div className="max-w-4xl mx-auto bg-slate-800 rounded-2xl shadow-lg p-6 md:p-8 border border-slate-700">
             <h2 className="text-xl md:text-2xl font-bold mb-8 text-yellow-500 flex items-center gap-2">
@@ -276,14 +268,14 @@ export default function AddExperience() {
               <div className="flex gap-4 pt-6">
                 <button
                   type="submit"
-                  className="bg-yellow-500 hover:bg-yellow-600 active:scale-95 transition text-black px-8 py-3 rounded-xl font-bold flex-1"
+                  className="bg-yellow-500 hover:bg-yellow-600 active:scale-95 transition text-black px-8 py-3 rounded-xl font-bold flex-1 cursor-pointer"
                 >
                   {paramsId ? "Update Experience" : "Save Experience"}
                 </button>
                 <button
                   type="button"
                   onClick={() => navigate("/ViewExperience")}
-                  className="bg-slate-600 hover:bg-slate-700 px-8 py-3 rounded-xl font-medium transition"
+                  className="bg-slate-600 hover:bg-slate-700 px-8 py-3 rounded-xl font-medium transition cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -291,7 +283,6 @@ export default function AddExperience() {
             </form>
           </div>
         </main>
-      </div>
-    </div>
+    </AdminLayout>
   );
 }

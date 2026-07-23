@@ -85,7 +85,7 @@ export default function Sidebar() {
     setOpenIndex(openIndex === index ? null : index);
   };
   return (
-    <aside className="max-w-[220px] h-screen bg-gradient-to-b from-slate-900 to-slate-800 border-r border-slate-700 sticky top-0 shadow-xl">
+    <aside className=" h-screen  sticky top-0">
       {/* LOGO / TITLE */}
       <div className="p-5 border-b border-slate-700">
         <h2 className="text-xl font-bold text-white tracking-wide">
@@ -103,7 +103,7 @@ export default function Sidebar() {
                 onClick={() => toggleMenu(index)}
                 className={`flex justify-between items-center px-4 py-3 rounded-xl cursor-pointer transition-all duration-300 group
                 ${openIndex === index
-                    ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-md"
+                    ? "bg-linear-to-r from-indigo-600 to-purple-600 text-white shadow-md"
                     : "text-gray-300 hover:bg-slate-700"
                   }`}
               >

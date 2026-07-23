@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Header from "../../Common/Header";
-import Sidebar from "../../Middle-Section/Sidebar";
+import AdminLayout from "../../Common/AdminLayout";
 import { FaEdit, FaTrash, FaFilePdf, FaImage, FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -80,13 +79,7 @@ export default function ViewResume() {
   );
 
   return (
-    <div className="min-h-screen bg-[#0f172a] text-slate-200">
-      <Header />
-      <div className="flex">
-        {/* Sidebar */}
-        <div className="hidden md:block w-72 shrink-0 border-r border-slate-800">
-          <Sidebar />
-        </div>
+    <AdminLayout>
 
         {/* Main Content */}
         <main className="flex-1 p-4 md:p-8 lg:p-12 overflow-x-hidden">
@@ -245,7 +238,6 @@ export default function ViewResume() {
             )}
           </div>
         </main>
-      </div>
-    </div>
+    </AdminLayout>
   );
 }
